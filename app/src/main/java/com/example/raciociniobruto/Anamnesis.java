@@ -4,28 +4,26 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Anamnesis extends Stage{
-    private String Name;
-    private String Sex;
-    private String Profession;
-    private String CC; //QP
-    private String HPI; //HDA
-    private String ROS; //ISDAS
-    private String PMH; //HMP
-    private String FD; //HMF
-    private String SH; //HFS
-
+    private StageItem Name;
+    private StageItem Age;
+    private StageItem Sex;
+    private StageItem Profession;
+    private StageItem CC; //QP
+    private StageItem HPI; //HDA
+    private StageItem ROS; //ISDAS
+    private StageItem PMH; //HMP
+    private StageItem FD; //HMF
+    private StageItem SH; //HFS
 
     public Anamnesis() {
 
     }
 
-    public Anamnesis(String name) {
-        Name = name;
-    }
-
-    public Anamnesis(String name, String sex, String profession, String CC, String HPI, String ROS, String PMH, String FD, String SH) {
+    public Anamnesis(StageItem name, StageItem age, StageItem sex, StageItem profession,
+                     StageItem CC, StageItem HPI, StageItem ROS, StageItem PMH, StageItem FD, StageItem SH) {
 
         this.Name = name;
+        this.Age = age;
         this.Sex = sex;
         this.Profession = profession;
         this.CC = CC;
@@ -34,15 +32,21 @@ public class Anamnesis extends Stage{
         this.PMH = PMH;
         this.FD = FD;
         this.SH = SH;
-        super.info.put("Nome",this.Name);
-        super.info.put("Sexo",this.Sex);
-        super.info.put("Profissão", this.Profession);
-        super.info.put("QP", this.CC);
-        super.info.put("HDA", this.HPI);
-        super.info.put("ISDAS",this.ROS);
-        super.info.put("HMP",this.PMH);
-        super.info.put("HMF",this.FD);
-        super.info.put("HFS",this.SH);
+
+        super.addStageItem(name);
+        super.addStageItem(age);
+        super.addStageItem(profession);
+        super.addStageItem(CC);
+        super.addStageItem(HPI);
+        super.addStageItem(ROS);
+        super.addStageItem(PMH);
+        super.addStageItem(FD);
+        super.addStageItem(SH);
+
+        super.addStageItemSummary(name);
+        super.addStageItemSummary(age);
+        super.addStageItemSummary(CC);
+        super.addStageItemSummary(HPI);
     }
 
 

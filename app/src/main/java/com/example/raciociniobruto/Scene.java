@@ -1,5 +1,6 @@
 package com.example.raciociniobruto;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Scene {
@@ -24,8 +25,15 @@ public class Scene {
         return this.stages[step].getInfo(info);
     }
 
-    public Set<String> getInfoOptions (){
-        return this.stages[step].getKeys();
+    public ArrayList<String> getInfoOptions (){
+        return this.stages[step].getInfoOptions();
     }
 
+    public String getStageSummary (){
+        String stageSummaryText = new String();
+        ArrayList<StageItem> items = this.stages[step].getSummaryItems();
+        for (int i = 0; i < items.size(); i++)
+            stageSummaryText += items.get(i).getName() + ": " + items.get(i).getValue() + "\n";
+        return stageSummaryText;
+    }
 }

@@ -1,24 +1,45 @@
 package com.example.raciociniobruto;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
 public class Stage {
-    protected HashMap<String,String> info;
+    private ArrayList<StageItem> info;
+    private ArrayList<StageItem> stageItemSummary;
 
     public Stage() {
-        this.info = new HashMap<String,String>();
+        this.info = new ArrayList<StageItem>();
+        this.stageItemSummary = new ArrayList<StageItem>();
     }
 
-    public Stage(HashMap<String, String> info) {
-        this.info = info;
+    public String getInfo(String info){
+        String value = null;
+        for (int i = 0; i < this.info.size(); i++)
+            if(this.info.get(i).getName().equals(info)){
+                value = this.info.get(i).getValue();
+                break;
+            }
+        return value;
     }
 
-    String getInfo(String info){
-        return this.info.get(info);
+    public ArrayList<String> getInfoOptions() {
+        ArrayList<String> infoOptions = new ArrayList<String>();
+        for (int i = 0; i < this.info.size(); i++) infoOptions.add(this.info.get(i).getName());
+        return infoOptions;
     }
 
-    Set<String> getKeys() {
-        return this.info.keySet();
+    public ArrayList<StageItem> getSummaryItems (){
+        return this.stageItemSummary;
     }
+
+    public void addStageItem (StageItem newItem){
+        this.info.add(newItem);
+    }
+
+    public void addStageItemSummary (StageItem newItem){
+        this.stageItemSummary.add(newItem);
+    }
+
+
 }

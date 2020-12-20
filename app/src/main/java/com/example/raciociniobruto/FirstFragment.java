@@ -18,9 +18,17 @@ public class FirstFragment extends Fragment {
     public FirstFragment() {
         this.scene = new Scene();
         Anamnesis anamnesis = new Anamnesis(
-                "Joao", "Masculino", "Pedreiro","Dor de cabeça"
-                ,"Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unileral. Refere piora da dor ao decúbito",
-                "SP","Nega comorbidades", "Familia ok", "Nega tabagismo. Etilista crônico");
+                new StageItem("Nome","JMC"),
+                new StageItem("Idade","56"),
+                new StageItem("Sexo", "Masculino"),
+                new StageItem("Profissão","Pedreiro"),
+                new StageItem("QP","Dor de cabeça") ,
+                new StageItem("HDA","Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"),
+                new StageItem("ISDAS","SP"),
+                new StageItem("HMP","Nega comorbidades"),
+                new StageItem("HMF","Familia ok"),
+                new StageItem("HFS","Nega tabagismo. Etilista crônico"));
+
         this.scene.loadCase(new ClinicalCase(anamnesis,null, null, null));
     }
 
@@ -36,14 +44,14 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textView = (TextView) view.findViewById(R.id.textview_first);
-        textView.setText(this.scene.askInfo("HDA"));
+        textView.setText(this.scene.getStageSummary());
+
         view.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //NavHostFragment.findNavController(FirstFragment.this)
                 //        .navigate(R.id.action_FirstFragment_to_SecondFragment);
 
-                Snackbar.make(view, "Ainda não momo", Snackbar.LENGTH_LONG).show();
 
 
             }
@@ -51,13 +59,12 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.button_diagnostic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Ainda não momo", Snackbar.LENGTH_LONG).show();
             }
         });
         view.findViewById(R.id.button_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Ainda não momo", Snackbar.LENGTH_LONG).show();
+
             }
         });
     }
