@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Stage {
+    private String name;
     private ArrayList<StageItem> info;
     private ArrayList<StageItem> stageItemSummary;
 
@@ -13,6 +14,13 @@ public class Stage {
         this.stageItemSummary = new ArrayList<StageItem>();
     }
 
+    public void setName (String name){
+        this.name = name;
+    }
+
+    public String getName (){
+        return this.name;
+    }
     public String getInfo(String info){
         String value = null;
         for (int i = 0; i < this.info.size(); i++)

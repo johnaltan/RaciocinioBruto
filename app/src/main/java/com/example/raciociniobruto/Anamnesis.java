@@ -19,7 +19,7 @@ public class Anamnesis extends Stage{
 
     }
 
-    public Anamnesis(StageItem name, StageItem age, StageItem sex, StageItem profession,
+    public Anamnesis(String stageName, StageItem name, StageItem age, StageItem sex, StageItem profession,
                      StageItem CC, StageItem HPI, StageItem ROS, StageItem PMH, StageItem FD, StageItem SH) {
 
         this.Name = name;
@@ -33,6 +33,7 @@ public class Anamnesis extends Stage{
         this.FD = FD;
         this.SH = SH;
 
+        super.setName(stageName);
         super.addStageItem(name);
         super.addStageItem(age);
         super.addStageItem(profession);
@@ -45,6 +46,7 @@ public class Anamnesis extends Stage{
 
         super.addStageItemSummary(name);
         super.addStageItemSummary(age);
+        super.addStageItemSummary(sex);
         super.addStageItemSummary(CC);
         super.addStageItemSummary(HPI);
     }

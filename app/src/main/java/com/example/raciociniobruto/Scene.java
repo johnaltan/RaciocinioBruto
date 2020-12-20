@@ -36,4 +36,8 @@ public class Scene {
             stageSummaryText += items.get(i).getName() + ": " + items.get(i).getValue() + "\n";
         return stageSummaryText;
     }
+
+    public String getStageName (){
+        return this.stages[step].getName();
+    }
 }

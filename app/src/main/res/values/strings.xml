@@ -14,4 +14,10 @@
     <string name="info">INFO</string>
     <string name="diagnosticar">Diagnosticar</string>
     <string name="Prox">PROX</string>
+    <string name="ok">OK</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="button">Button</string>
+    <string name="add">ADD</string>
+    <string name="newInfo">Informação</string>
 </resources>
