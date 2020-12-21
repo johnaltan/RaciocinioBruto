@@ -15,26 +15,9 @@ import java.util.ArrayList;
 
 public class AnamnesisFragment extends Fragment {
     TextView textView;
-    private Scene scene;
     String outputText;
-    int options;
-    SharedViewModel viewModel;
 
-    public AnamnesisFragment() {
-        Anamnesis anamnesis = new Anamnesis("Anamnese",
-                new StageItem("Nome","JMC"),
-                new StageItem("Idade","56"),
-                new StageItem("Sexo", "Masculino"),
-                new StageItem("Profissão","Pedreiro"),
-                new StageItem("QP","Dor de cabeça") ,
-                new StageItem("HDA","Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"),
-                new StageItem("ISDAS","SP"),
-                new StageItem("HMP","Nega comorbidades"),
-                new StageItem("HMF","Nega doenças na família"),
-                new StageItem("HFS","Nega tabagismo. Etilista crônico"));
-        this.options = 0;
-        this.scene = new Scene(new ClinicalCase(anamnesis,null, null, null));
-    }
+    SharedViewModel viewModel;
 
     @Override
     public View onCreateView(
@@ -48,16 +31,15 @@ public class AnamnesisFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textView = (TextView) view.findViewById(R.id.textview_first);
-        outputText = this.scene.getStageSummary();
+        outputText = MainActivity.getStageSummary();
         textView.setText(outputText);
-
 
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
             outputText += "\nSolicitados:\n\n";
-            for (String i : s) outputText += i + ": " + scene.askInfo(i) + "\n";
-            outputText += "\nPassos dados: " + String.valueOf(scene.getStep());
+            for (String i : s) outputText += i + ": " + MainActivity.askInfo(i) + "\n";
+            outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
             textView.setText(outputText);
         });
 
@@ -100,7 +82,7 @@ public class AnamnesisFragment extends Fragment {
                 }
                 textView.setText(outputText);*/
 
-                viewModel.setTitle(scene.getStageName());
+                viewModel.setTitle(MainActivity.getStageName());
 
                 NavHostFragment.findNavController(AnamnesisFragment.this)
                         .navigate(R.id.action_AnamnesisFragment_to_InfoFragment);
