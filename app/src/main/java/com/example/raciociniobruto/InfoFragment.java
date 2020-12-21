@@ -54,7 +54,7 @@ public class InfoFragment extends Fragment {
                 data.putStringArrayList("infoAdded",infoAdded);
 
                 NavHostFragment.findNavController(InfoFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment,data);
+                        .navigate(R.id.action_InfoFragment_to_AnamnesisFragment,data);
             }
         });
 
@@ -75,4 +75,5 @@ public class InfoFragment extends Fragment {
         });
 
     }
+
 }

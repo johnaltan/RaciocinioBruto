@@ -39,7 +39,7 @@ public class AnamnesisFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_anamnesis, container, false);
+        return inflater.inflate(R.layout.anamnesis_fragment, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class AnamnesisFragment extends Fragment {
                 data.putString("stageName",scene.getStageName());
 
                 NavHostFragment.findNavController(AnamnesisFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment,data);
+                        .navigate(R.id.action_AnamnesisFragment_to_InfoFragment,data);
 
 
 

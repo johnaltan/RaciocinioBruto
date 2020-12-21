@@ -3,26 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/AnamnesisFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/AnamnesisFragment"
         android:name="com.example.raciociniobruto.AnamnesisFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_anamnesis">
+        android:label="@string/anamnesis_fragment_label"
+        tools:layout="@layout/anamnesis_fragment">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_AnamnesisFragment_to_InfoFragment"
+            app:destination="@id/InfoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/InfoFragment"
         android:name="com.example.raciociniobruto.InfoFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/info_fragment_label"
         tools:layout="@layout/info_fragment">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_InfoFragment_to_AnamnesisFragment"
+            app:destination="@id/AnamnesisFragment"
+            app:popUpTo="@id/AnamnesisFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>
