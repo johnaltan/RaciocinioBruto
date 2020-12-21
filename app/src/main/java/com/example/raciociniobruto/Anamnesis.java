@@ -1,8 +1,5 @@
 package com.example.raciociniobruto;
 
-import java.util.HashMap;
-import java.util.Set;
-
 public class Anamnesis extends Stage{
     private StageItem Name;
     private StageItem Age;
@@ -34,15 +31,15 @@ public class Anamnesis extends Stage{
         this.SH = SH;
 
         super.setName(stageName);
-        super.addStageItem(name);
-        super.addStageItem(age);
-        super.addStageItem(profession);
-        super.addStageItem(CC);
-        super.addStageItem(HPI);
-        super.addStageItem(ROS);
-        super.addStageItem(PMH);
-        super.addStageItem(FD);
-        super.addStageItem(SH);
+        super.addAvailableStageItem(name);
+        super.addAvailableStageItem(age);
+        super.addAvailableStageItem(profession);
+        super.addAvailableStageItem(CC);
+        super.addAvailableStageItem(HPI);
+        super.addAvailableStageItem(ROS);
+        super.addAvailableStageItem(PMH);
+        super.addAvailableStageItem(FD);
+        super.addAvailableStageItem(SH);
 
         super.addStageItemSummary(name);
         super.addStageItemSummary(age);

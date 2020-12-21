@@ -24,4 +24,18 @@ public class StageItem {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+
+        if (obj.getClass() != this.getClass()) return false;
+
+        final StageItem other = (StageItem) obj;
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name))
+            return false;
+
+        if (this.value != other.value) return false;
+        return true;
+    }
 }

@@ -21,7 +21,6 @@ public class AnamnesisFragment extends Fragment {
     SharedViewModel viewModel;
 
     public AnamnesisFragment() {
-        this.scene = new Scene();
         Anamnesis anamnesis = new Anamnesis("Anamnese",
                 new StageItem("Nome","JMC"),
                 new StageItem("Idade","56"),
@@ -34,7 +33,7 @@ public class AnamnesisFragment extends Fragment {
                 new StageItem("HMF","Nega doenças na família"),
                 new StageItem("HFS","Nega tabagismo. Etilista crônico"));
         this.options = 0;
-        this.scene.loadCase(new ClinicalCase(anamnesis,null, null, null));
+        this.scene = new Scene(new ClinicalCase(anamnesis,null, null, null));
     }
 
     @Override
@@ -58,6 +57,7 @@ public class AnamnesisFragment extends Fragment {
         viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
             outputText += "\nSolicitados:\n\n";
             for (String i : s) outputText += i + ": " + scene.askInfo(i) + "\n";
+            outputText += "\nPassos dados: " + String.valueOf(scene.getStep());
             textView.setText(outputText);
         });
 
