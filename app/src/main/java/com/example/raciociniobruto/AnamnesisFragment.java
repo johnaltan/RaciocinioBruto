@@ -48,8 +48,8 @@ public class AnamnesisFragment extends Fragment {
         view.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //NavHostFragment.findNavController(FirstFragment.this)
-                //        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                NavHostFragment.findNavController(AnamnesisFragment.this)
+                        .navigate(R.id.action_AnamnesisFragment_to_PhysicalExamFragment);
 
 
 

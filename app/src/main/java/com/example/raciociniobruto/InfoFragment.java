@@ -56,8 +56,11 @@ public class InfoFragment extends Fragment {
 
                 viewModel.setInfoAdded(infoAdded);
 
+              //  NavHostFragment.findNavController(InfoFragment.this)
+              //          .navigate(R.id.action_InfoFragment_to_AnamnesisFragment);
+
                 NavHostFragment.findNavController(InfoFragment.this)
-                        .navigate(R.id.action_InfoFragment_to_AnamnesisFragment);
+                        .navigateUp();
             }
         });
 

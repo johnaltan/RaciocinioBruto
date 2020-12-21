@@ -22,4 +22,7 @@
     <string name="newInfo">Informação</string>
     <string name="txtTitle" />
     <string name="anamnesis_content">Anamnesis content</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="physicalExam_content">Physical Exam content</string>
 </resources>
