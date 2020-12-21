@@ -11,10 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.ArrayList;
-
 public class AnamnesisFragment extends Fragment {
-    TextView textView;
+    TextView txtContent;
+    TextView txtTitle;
     String outputText;
 
     SharedViewModel viewModel;
@@ -30,9 +29,11 @@ public class AnamnesisFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        textView = (TextView) view.findViewById(R.id.textview_first);
+        txtContent = (TextView) view.findViewById(R.id.txt_anamnesis_content);
+        txtTitle = (TextView) view.findViewById(R.id.txt_anamnesis_title);
+        txtTitle.setText(MainActivity.getStageName());
         outputText = MainActivity.getStageSummary();
-        textView.setText(outputText);
+        txtContent.setText(outputText);
 
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -40,7 +41,7 @@ public class AnamnesisFragment extends Fragment {
             outputText += "\nSolicitados:\n\n";
             for (String i : s) outputText += i + ": " + MainActivity.askInfo(i) + "\n";
             outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
-            textView.setText(outputText);
+            txtContent.setText(outputText);
         });
 
 

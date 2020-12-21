@@ -20,4 +20,6 @@
     <string name="button">Button</string>
     <string name="add">ADD</string>
     <string name="newInfo">Informação</string>
+    <string name="txtTitle" />
+    <string name="anamnesis_content">Anamnesis content</string>
 </resources>
