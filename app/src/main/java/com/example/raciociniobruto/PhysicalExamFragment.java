@@ -68,6 +68,7 @@ public class PhysicalExamFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        MainActivity.setStagePos(1);
 
         view.findViewById(R.id.button_physicalExam_info).setOnClickListener(new View.OnClickListener() {
             @Override

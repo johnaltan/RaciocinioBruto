@@ -29,6 +29,8 @@ public class AnamnesisFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MainActivity.setStagePos(0);
+
         txtContent = (TextView) view.findViewById(R.id.txt_anamnesis_content);
         txtTitle = (TextView) view.findViewById(R.id.txt_anamnesis_title);
         txtTitle.setText(MainActivity.getStageName());

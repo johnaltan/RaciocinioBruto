@@ -74,4 +74,6 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<StageItem> getAskedItems (){
         return scene.getStageItems();
     }
+
+    public static void setStagePos(int stagePos) {scene.setStagePos(stagePos);}
 }

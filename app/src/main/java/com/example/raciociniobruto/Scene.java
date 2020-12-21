@@ -30,8 +30,7 @@ public class Scene {
 
     public String askInfo(String info){
         String askedInfo = this.stages[stagePos].askInfo(info);
-        if (askedInfo == null) askedInfo = new String("Info inexistente");
-        nextStep();
+        if (askedInfo == null) askedInfo = "Info inexistente";
         return askedInfo;
     }
 
@@ -54,6 +53,8 @@ public class Scene {
     public String getStageName (){
         return this.stages[stagePos].getName();
     }
+
+    public void setStagePos(int stagePos) {this.stagePos = stagePos;}
 
     public ArrayList<StageItem> getStageItems (){
         return this.stages[stagePos].getAskedItems();
