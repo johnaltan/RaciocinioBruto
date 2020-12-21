@@ -2,16 +2,8 @@ package com.example.raciociniobruto;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -38,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 new StageItem("HMF","Nega doenças na família"),
                 new StageItem("HFS","Nega tabagismo. Etilista crônico"));
 
-        this.scene = new Scene(new ClinicalCase(anamnesis,null, null, null));
+        this.scene = new Scene(new ClinicalCase(anamnesis,null, new PhysicalExam(), null));
     }
 
 
@@ -62,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static ArrayList<String> getInfoOptions() {
-        return scene.getInfoOptions();
+    public static ArrayList<String> nameInfoOptions() {
+        return scene.nameInfoOptions();
     }
 
 
@@ -73,5 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static String getStageName() {
         return scene.getStageName();
+    }
+
+    public static ArrayList<String> nameAskedInfos () {
+        return scene.nameAskedInfos();
+    }
+
+    public static ArrayList<StageItem> getAskedItems (){
+        return scene.getStageItems();
     }
 }

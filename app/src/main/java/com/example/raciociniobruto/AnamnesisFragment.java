@@ -16,7 +16,7 @@ public class AnamnesisFragment extends Fragment {
     TextView txtTitle;
     String outputText;
 
-    SharedViewModel viewModel;
+    //SharedViewModel viewModel;
 
     @Override
     public View onCreateView(
@@ -33,21 +33,25 @@ public class AnamnesisFragment extends Fragment {
         txtTitle = (TextView) view.findViewById(R.id.txt_anamnesis_title);
         txtTitle.setText(MainActivity.getStageName());
         outputText = MainActivity.getStageSummary();
-        txtContent.setText(outputText);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
+        //viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+/*        viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
             outputText += "\nSolicitados:\n\n";
             for (String i : s) outputText += i + ": " + MainActivity.askInfo(i) + "\n";
             outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
             txtContent.setText(outputText);
-        });
+        });*/
+        outputText += "\nSolicitados:\n\n";
+        for (StageItem i : MainActivity.getAskedItems()) outputText += i.getName() + ": " + i.getValue()+"\n";
+        txtContent.setText(outputText);
 
 
         view.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.nextStage();
                 NavHostFragment.findNavController(AnamnesisFragment.this)
                         .navigate(R.id.action_AnamnesisFragment_to_PhysicalExamFragment);
 
@@ -83,7 +87,7 @@ public class AnamnesisFragment extends Fragment {
                 }
                 textView.setText(outputText);*/
 
-                viewModel.setTitle(MainActivity.getStageName());
+             //   viewModel.setTitle(MainActivity.getStageName());
 
                 NavHostFragment.findNavController(AnamnesisFragment.this)
                         .navigate(R.id.action_AnamnesisFragment_to_InfoFragment);

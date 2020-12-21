@@ -25,21 +25,37 @@ public class Stage {
         return this.name;
     }
 
-    public String getInfo(String info){
-        String value = null;
-        for (StageItem i : availableStageItems)
-            if(i.getName().equalsIgnoreCase(info)){
-                value = i.getValue();
-                askedStageItems.add(i);
+    public String askInfo(String info){
+        StageItem item = null;
+        for (StageItem i : availableStageItems) {     //search for items in clinical case
+            if (i.getName().equalsIgnoreCase(info)) {
+                item = i;
                 break;
             }
-        return value;
+        }
+        if (item == null){
+            for (StageItem i : stageItemOptions) {  //search for items in whole options
+                if (i.getName().equalsIgnoreCase(info)) {
+                    item = i;
+                    break;
+                }
+            }
+        }
+        if (item == null) {  //if neither clinical case or whole options, it doesn't exist
+            askedStageItems.add(new StageItem(info,null));
+            return null;
+        }
+        askedStageItems.add(item);
+        return item.getValue();
     }
 
-    public ArrayList<String> getStageItemOptions() {
-        ArrayList<String> infoOptions = new ArrayList<String>();
-        for (StageItem i : this.stageItemOptions) infoOptions.add(i.getName());
-        return infoOptions;
+    public ArrayList<String> nameInfoOptions() {
+        return informStageItemsNames(stageItemOptions);
+    }
+
+    public ArrayList<String> nameAskedInfos(){
+        return informStageItemsNames(askedStageItems);
+
     }
 
     public ArrayList<StageItem> getSummaryItems (){
@@ -70,9 +86,18 @@ public class Stage {
         return stageItemSummary;
     }
 
+    public ArrayList<StageItem> getAskedItems (){
+        return this.askedStageItems;
+    }
+
     public void setStageItemSummary(ArrayList<StageItem> stageItemSummary) {
         this.stageItemSummary = stageItemSummary;
     }
 
+    private ArrayList<String> informStageItemsNames (ArrayList<StageItem> e){
+        ArrayList<String> infoOptions = new ArrayList<String>();
+        for (StageItem i : e) infoOptions.add(i.getName());
+        return infoOptions;
+    }
 
 }

@@ -29,17 +29,19 @@ public class Scene {
     }
 
     public String askInfo(String info){
-        String askedInfo = this.stages[stagePos].getInfo(info);
-        if (askedInfo == null) askedInfo = new String("Info desnecessária");
+        String askedInfo = this.stages[stagePos].askInfo(info);
+        if (askedInfo == null) askedInfo = new String("Info inexistente");
         nextStep();
         return askedInfo;
     }
 
-    public ArrayList<String> getInfoOptions (){
-        return this.stages[stagePos].getStageItemOptions();
+    public ArrayList<String> nameInfoOptions(){
+        return this.stages[stagePos].nameInfoOptions();
     }
 
-
+    public ArrayList<String> nameAskedInfos (){
+        return this.stages[stagePos].nameAskedInfos();
+    }
 
     public String getStageSummary (){
         String stageSummaryText = new String();
@@ -51,5 +53,9 @@ public class Scene {
 
     public String getStageName (){
         return this.stages[stagePos].getName();
+    }
+
+    public ArrayList<StageItem> getStageItems (){
+        return this.stages[stagePos].getAskedItems();
     }
 }

@@ -21,7 +21,7 @@ public class InfoFragment extends Fragment {
     String stringTxtContent;
     String stringAddedOptions;
     String stringTxtTitle;
-    ArrayList<String> infoAdded;
+   // ArrayList<String> infoAdded;
 
     SharedViewModel viewModel;
 
@@ -38,7 +38,7 @@ public class InfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         stringTxtContent = new String();
         stringAddedOptions = new String();
-        infoAdded = new ArrayList<String>();
+      //  infoAdded = new ArrayList<String>();
 
         txtContent = (TextView) view.findViewById(R.id.txt_content);
         txtTitle = (TextView) view.findViewById(R.id.txt_title);
@@ -46,18 +46,18 @@ public class InfoFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
+        //viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
 
+        txtTitle.setText("Solicitar info: " +MainActivity.getStageName());
+        for(String s : MainActivity.nameAskedInfos()) stringTxtContent += s + "\n";
+        txtContent.setText(stringTxtContent);
 
         view.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                viewModel.setInfoAdded(infoAdded);
-
-              //  NavHostFragment.findNavController(InfoFragment.this)
-              //          .navigate(R.id.action_InfoFragment_to_AnamnesisFragment);
+            //    viewModel.setInfoAdded(infoAdded);
 
                 NavHostFragment.findNavController(InfoFragment.this)
                         .navigateUp();
@@ -69,7 +69,8 @@ public class InfoFragment extends Fragment {
             public void onClick(View view) {
                 String i = editTextOption.getText().toString();
 
-                infoAdded.add(i);
+               // infoAdded.add(i);
+                MainActivity.askInfo(i);
                 stringTxtContent += i + "\n";
                 txtContent.setText(stringTxtContent);
 
