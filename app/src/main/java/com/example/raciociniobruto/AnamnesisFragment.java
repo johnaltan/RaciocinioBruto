@@ -8,13 +8,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+
+import java.util.ArrayList;
 
 public class AnamnesisFragment extends Fragment {
     TextView textView;
     private Scene scene;
     String outputText;
     int options;
+    SharedViewModel viewModel;
 
     public AnamnesisFragment() {
         this.scene = new Scene();
@@ -47,6 +51,16 @@ public class AnamnesisFragment extends Fragment {
         textView = (TextView) view.findViewById(R.id.textview_first);
         outputText = this.scene.getStageSummary();
         textView.setText(outputText);
+
+
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
+            outputText += "\nSolicitados:\n\n";
+            for (String i : s) outputText += i + ": " + scene.askInfo(i) + "\n";
+            textView.setText(outputText);
+        });
+
 
         view.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +99,11 @@ public class AnamnesisFragment extends Fragment {
                         break;
                 }
                 textView.setText(outputText);*/
-                Bundle data = new Bundle ();
-                data.putStringArrayList("infoOptions",scene.getInfoOptions());
-                data.putString("stageName",scene.getStageName());
+
+                viewModel.setTitle(scene.getStageName());
 
                 NavHostFragment.findNavController(AnamnesisFragment.this)
-                        .navigate(R.id.action_AnamnesisFragment_to_InfoFragment,data);
+                        .navigate(R.id.action_AnamnesisFragment_to_InfoFragment);
 
 
 

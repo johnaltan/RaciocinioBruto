@@ -24,7 +24,7 @@ public class Stage {
     public String getInfo(String info){
         String value = null;
         for (int i = 0; i < this.info.size(); i++)
-            if(this.info.get(i).getName().equals(info)){
+            if(this.info.get(i).getName().equalsIgnoreCase(info)){
                 value = this.info.get(i).getValue();
                 break;
             }

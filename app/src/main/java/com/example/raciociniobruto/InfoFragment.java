@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
@@ -19,8 +20,11 @@ public class InfoFragment extends Fragment {
     EditText editTextOption;
     String stringTxtContent;
     String stringAddedOptions;
-    ArrayList<String> infoOptions;
+    String stringTxtTitle;
     ArrayList<String> infoAdded;
+
+    SharedViewModel viewModel;
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -40,21 +44,20 @@ public class InfoFragment extends Fragment {
         txtTitle = (TextView) view.findViewById(R.id.txt_title);
         editTextOption = (EditText) view.findViewById(R.id.editTextOption);
 
-        txtTitle.setText("Mais informações: " + getArguments().getString("stageName"));
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        infoOptions = getArguments().getStringArrayList("infoOptions");
-
+        viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
 
 
         view.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Bundle data = new Bundle ();
-                data.putStringArrayList("infoAdded",infoAdded);
+
+                viewModel.setInfoAdded(infoAdded);
 
                 NavHostFragment.findNavController(InfoFragment.this)
-                        .navigate(R.id.action_InfoFragment_to_AnamnesisFragment,data);
+                        .navigate(R.id.action_InfoFragment_to_AnamnesisFragment);
             }
         });
 
