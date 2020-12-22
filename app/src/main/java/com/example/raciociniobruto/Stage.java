@@ -1,8 +1,12 @@
 package com.example.raciociniobruto;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class Stage {
+public abstract class Stage {
     private String name;
     private ArrayList<StageItem> availableStageItems;
     private ArrayList<StageItem> stageItemOptions;
@@ -99,5 +103,32 @@ public class Stage {
         for (StageItem i : e) infoOptions.add(i.getName());
         return infoOptions;
     }
+
+    public ArrayList<StageItem> getStageItemOptions() {
+        return stageItemOptions;
+    }
+
+    public ArrayList<StageItem> getAskedStageItems() {
+        return askedStageItems;
+    }
+
+    public void setAskedStageItems(ArrayList<StageItem> askedStageItems) {
+        this.askedStageItems = askedStageItems;
+    }
+
+    public JSONArray generateJSONArrayObject(ArrayList<StageItem> items) throws JSONException {
+        JSONArray arrayObject = new JSONArray();
+        for(int i = 0; i < items.size();i++)
+            arrayObject.put(i,items.get(i).toJSONObject());
+        return arrayObject;
+    }
+
+    public ArrayList<StageItem> JSONArraytoArrayList (JSONArray jsonArray) throws JSONException {
+        ArrayList<StageItem> arrayList = new ArrayList<StageItem>();
+        for(int i = 0; i < jsonArray.length(); i++)
+            arrayList.add((StageItem)jsonArray.get(i));
+        return arrayList;
+    }
+
 
 }

@@ -31,7 +31,12 @@ public class MainActivity extends AppCompatActivity {
                     new StageItem("HMF", "Nega doenças na família"),
                     new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
 
-            this.scene = new Scene(new ClinicalCase(anamnesis, null, new PhysicalExam(), new ComplementaryExam()));
+            ArrayList<ClinicalCase> clinicalCases = new ArrayList<ClinicalCase>();
+            ClinicalCase clinicalCase = new ClinicalCase(anamnesis, null, new PhysicalExam(), new ComplementaryExam());
+            this.scene = new Scene(clinicalCase);
+            clinicalCases.add(clinicalCase);
+            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer("clinicalCases",this);
+            transfer.sendCases(clinicalCases);
         }
     }
 

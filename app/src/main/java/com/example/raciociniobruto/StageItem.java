@@ -1,8 +1,14 @@
 package com.example.raciociniobruto;
 
-public class StageItem {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class StageItem implements Transferable{
     private String name;
     private String value;
+
+    public StageItem() {
+    }
 
     public StageItem(String name, String value) {
         this.name = name;
@@ -37,5 +43,23 @@ public class StageItem {
 
         if (this.value != other.value) return false;
         return true;
+    }
+
+    @Override
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("name",this.name);
+        object.put("value",this.value);
+        return object;
+    }
+
+    @Override
+    public Transferable fromJSONObject(JSONObject jsonObject) throws JSONException {
+        StageItem stageItem = new StageItem();
+        stageItem.name = jsonObject.getString("name");
+        stageItem.value = jsonObject.getString("value");
+
+        return stageItem;
+
     }
 }

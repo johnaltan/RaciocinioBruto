@@ -1,6 +1,9 @@
 package com.example.raciociniobruto;
 
-public class PhysicalExam extends Stage {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class PhysicalExam extends Stage implements Transferable{
 
     public PhysicalExam (){
         super.setName("Exame fisico");
@@ -9,5 +12,15 @@ public class PhysicalExam extends Stage {
         super.addAvailableStageItem(ssvv);
         super.addAvailableStageItem(new StageItem("AC","RCR 2T BNF SS"));
 
+    }
+
+    @Override
+    public JSONObject toJSONObject() throws JSONException {
+        return null;
+    }
+
+    @Override
+    public Transferable fromJSONObject(JSONObject jsonObject) throws JSONException {
+        return null;
     }
 }
