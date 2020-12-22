@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                     new StageItem("HMF", "Nega doenças na família"),
                     new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
 
-            this.scene = new Scene(new ClinicalCase(anamnesis, null, new PhysicalExam(), null));
+            this.scene = new Scene(new ClinicalCase(anamnesis, null, new PhysicalExam(), new ComplementaryExam()));
         }
     }
 

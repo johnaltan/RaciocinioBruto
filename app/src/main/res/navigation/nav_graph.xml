@@ -35,6 +35,12 @@
             app:destination="@id/PhysicalExamFragment"
             app:popUpTo="@id/PhysicalExamFragment"
             app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_InfoFragment_to_ComplementaryExamsFragment"
+            app:destination="@id/complementaryExamsFragment"
+            app:popUpTo="@id/complementaryExamsFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -46,5 +52,22 @@
         <action
             android:id="@+id/action_PhysicalExamFragment_to_InfoFragment"
             app:destination="@id/InfoFragment" />
+        <action
+            android:id="@+id/action_PhysicalExamFragment_to_ComplementaryExamsFragment"
+            app:destination="@id/complementaryExamsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/complementaryExamsFragment"
+        android:name="com.example.raciociniobruto.ComplementaryExamsFragment"
+        android:label="fragment_complementary_exams"
+        tools:layout="@layout/fragment_complementary_exams">
+
+        <action
+            android:id="@+id/action_ComplementaryExamsFragment_to_InfoFragment"
+            app:destination="@id/InfoFragment" />
+
+    </fragment>
+
+
 </navigation>
