@@ -1,12 +1,9 @@
 package com.example.raciociniobruto;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class Anamnesis extends Stage implements Transferable{
+public class Anamnesis extends Stage {
     private StageItem name;
     private StageItem age;
     private StageItem sex;
@@ -36,7 +33,7 @@ public class Anamnesis extends Stage implements Transferable{
         this.FD = FD;
         this.SH = SH;
 
-        super.setName(stageName);
+        super.setStageName(stageName);
         super.addAvailableStageItem(name);
         super.addAvailableStageItem(age);
         super.addAvailableStageItem(profession);
@@ -53,50 +50,4 @@ public class Anamnesis extends Stage implements Transferable{
         super.addStageItemSummary(CC);
         super.addStageItemSummary(HPI);
     }
-
-    @Override
-    public JSONObject toJSONObject() throws JSONException {
-        JSONObject object = new JSONObject();
-
-        object.put("name",this.name.toJSONObject());
-        object.put("age",this.age.toJSONObject());
-        object.put("profession",this.profession.toJSONObject());
-        object.put("CC",this.CC.toJSONObject());
-        object.put("HPI",this.HPI.toJSONObject());
-        object.put("ROS",this.ROS.toJSONObject());
-        object.put("PMH",this.PMH.toJSONObject());
-        object.put("FD",this.FD.toJSONObject());
-        object.put("SH",this.SH.toJSONObject());
-
-        /*
-        object.put("stageName",super.getName());
-        object.put("availableStageItems",super.generateJSONArrayObject(super.getAvailableStageItems()));
-        object.put("stageItemOptions",super.generateJSONArrayObject(super.getStageItemOptions()));
-        object.put("stageItemSummary",super.generateJSONArrayObject(super.getStageItemSummary()));
-        object.put("askedStageItems",super.generateJSONArrayObject(super.getAskedStageItems()));*/
-
-        return object;
-    }
-
-    @Override
-    public Transferable fromJSONObject(JSONObject jsonObject) throws JSONException {
-        Anamnesis anamnesis = new Anamnesis();
-
-        anamnesis.name = (StageItem)jsonObject.get("name");
-        anamnesis.age = (StageItem)jsonObject.get("age");
-        anamnesis.profession = (StageItem)jsonObject.get("profession");
-        anamnesis.CC = (StageItem)jsonObject.get("CC");
-        anamnesis.HPI = (StageItem)jsonObject.get("HPI");
-        anamnesis.ROS = (StageItem)jsonObject.get("ROS");
-        anamnesis.PMH = (StageItem)jsonObject.get("PMH");
-        anamnesis.FD = (StageItem)jsonObject.get("FD");
-        anamnesis.SH = (StageItem)jsonObject.get("SH");
-
-        return anamnesis;
-    }
-
-
-
-
-
 }

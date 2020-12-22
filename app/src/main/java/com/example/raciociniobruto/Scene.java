@@ -52,7 +52,7 @@ public class Scene {
     }
 
     public String getStageName (){
-        return this.stages[stagePos].getName();
+        return this.stages[stagePos].getStageName();
     }
 
     public void setStagePos(int stagePos) {this.stagePos = stagePos;}

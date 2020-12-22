@@ -2,12 +2,11 @@ package com.example.raciociniobruto;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public abstract class Stage {
-    private String name;
+    private String stageName;
     private ArrayList<StageItem> availableStageItems;
     private ArrayList<StageItem> stageItemOptions;
     private ArrayList<StageItem> stageItemSummary;
@@ -21,12 +20,12 @@ public abstract class Stage {
 
     }
 
-    public void setName (String name){
-        this.name = name;
+    public void setStageName(String stageName){
+        this.stageName = stageName;
     }
 
-    public String getName (){
-        return this.name;
+    public String getStageName(){
+        return this.stageName;
     }
 
     public String askInfo(String info){
@@ -115,20 +114,4 @@ public abstract class Stage {
     public void setAskedStageItems(ArrayList<StageItem> askedStageItems) {
         this.askedStageItems = askedStageItems;
     }
-
-    public JSONArray generateJSONArrayObject(ArrayList<StageItem> items) throws JSONException {
-        JSONArray arrayObject = new JSONArray();
-        for(int i = 0; i < items.size();i++)
-            arrayObject.put(i,items.get(i).toJSONObject());
-        return arrayObject;
-    }
-
-    public ArrayList<StageItem> JSONArraytoArrayList (JSONArray jsonArray) throws JSONException {
-        ArrayList<StageItem> arrayList = new ArrayList<StageItem>();
-        for(int i = 0; i < jsonArray.length(); i++)
-            arrayList.add((StageItem)jsonArray.get(i));
-        return arrayList;
-    }
-
-
 }

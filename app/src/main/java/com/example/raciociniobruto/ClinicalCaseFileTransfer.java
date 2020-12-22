@@ -1,14 +1,21 @@
 package com.example.raciociniobruto;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,10 +35,11 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
     @Override
     public ArrayList<ClinicalCase> loadCases() {
         FileInputStream fis = null;
-        ArrayList<ClinicalCase> loadedClinicalCases = new ArrayList<ClinicalCase>();
+        ArrayList<ClinicalCase> loadedClinicalCases = null;
 
         try {
-            fis = context.openFileInput(fileName);
+            fis = new FileInputStream(new File(context.getExternalFilesDir(null),fileName));
+
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
@@ -39,16 +47,12 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
             while ((fileContent = br.readLine()) != null) {
                 sb.append(fileContent).append("\n");
             }
-            JSONArray jsonArray = new JSONArray(fileContent);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                ClinicalCase clinicalCase = (ClinicalCase)jsonArray.get(i);
-                loadedClinicalCases.add(clinicalCase);
-            }
+            Gson gson = new Gson();
+            loadedClinicalCases = gson.fromJson(sb.toString(), new TypeToken<ArrayList<ClinicalCase>>(){}.getType());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         } finally {
             if (fis != null) {
@@ -59,7 +63,7 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
                 }
             }
         }
-        return null;
+        return loadedClinicalCases;
     }
 
     @Override
@@ -68,23 +72,19 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
 
         FileOutputStream fos = null;
         try {
-            JSONArray jsonArrayObject = new JSONArray();
-            for(int i = 0; i < clinicalCases.size(); i++)
-                jsonArrayObject.put(i,clinicalCases.get(i).toJSONObject());
-            fos = this.context.openFileOutput(this.fileName, Context.MODE_PRIVATE);
-            fos.write(jsonArrayObject.toString().getBytes());
-            Log.d("JSON file",jsonArrayObject.toString(1));
+            Gson gson = new Gson();
+            String gsonString = gson.toJson(clinicalCases);
 
-           // Toast.makeText(this, "Saved to " + this.context.getFilesDir() + "/" + this.fileName,
-           //         Toast.LENGTH_LONG).show();
-            Log.d("FILESAVED","Saved to " + this.context.getFilesDir() + "/" + this.fileName);
+            fos = new FileOutputStream(new File(context.getExternalFilesDir(null),fileName));
+            fos.write(gsonString.getBytes());
+            Log.d("GSON file written",gsonString);
+
+            Log.d("FILESAVED","Saved to " + this.context.getExternalFilesDir(null) + "/" + this.fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } finally {
+        }finally {
             if (fos != null) {
                 try {
                     fos.close();

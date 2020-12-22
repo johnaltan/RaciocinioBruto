@@ -1,10 +1,12 @@
 package com.example.raciociniobruto;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,9 +37,17 @@ public class MainActivity extends AppCompatActivity {
             ClinicalCase clinicalCase = new ClinicalCase(anamnesis, null, new PhysicalExam(), new ComplementaryExam());
             this.scene = new Scene(clinicalCase);
             clinicalCases.add(clinicalCase);
-            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer("clinicalCases",this);
+            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer("clinicalCases.json",this);
             transfer.sendCases(clinicalCases);
+
+            ArrayList<ClinicalCase> readedCases = transfer.loadCases();
+
+            String str = new String();
+            for(ClinicalCase c : readedCases) str += c.getAnamnesis().getStageName();
+            Log.d("LIDOS",str);
         }
+
+
     }
 
 
