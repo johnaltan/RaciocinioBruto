@@ -44,7 +44,7 @@ public class InfoFragment extends Fragment {
         txtTitle = (TextView) view.findViewById(R.id.txt_title);
         editTextOption = (EditText) view.findViewById(R.id.editTextOption);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+       // viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         //viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
 

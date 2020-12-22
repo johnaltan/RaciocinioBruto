@@ -18,24 +18,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Anamnesis anamnesis = new Anamnesis("Anamnese",
-                new StageItem("Nome","JMC"),
-                new StageItem("Idade","56"),
-                new StageItem("Sexo", "Masculino"),
-                new StageItem("Profissão","Pedreiro"),
-                new StageItem("QP","Dor de cabeça") ,
-                new StageItem("HDA","Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"),
-                new StageItem("ISDAS","SP"),
-                new StageItem("HMP","Nega comorbidades"),
-                new StageItem("HMF","Nega doenças na família"),
-                new StageItem("HFS","Nega tabagismo. Etilista crônico"));
+        if(savedInstanceState == null) {
+            Anamnesis anamnesis = new Anamnesis("Anamnese",
+                    new StageItem("Nome", "JMC"),
+                    new StageItem("Idade", "56"),
+                    new StageItem("Sexo", "Masculino"),
+                    new StageItem("Profissão", "Pedreiro"),
+                    new StageItem("QP", "Dor de cabeça"),
+                    new StageItem("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"),
+                    new StageItem("ISDAS", "SP"),
+                    new StageItem("HMP", "Nega comorbidades"),
+                    new StageItem("HMF", "Nega doenças na família"),
+                    new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
 
-        this.scene = new Scene(new ClinicalCase(anamnesis,null, new PhysicalExam(), null));
-    }
-
-
-    public static void nextStep() {
-        scene.nextStep();
+            this.scene = new Scene(new ClinicalCase(anamnesis, null, new PhysicalExam(), null));
+        }
     }
 
 
@@ -43,16 +40,13 @@ public class MainActivity extends AppCompatActivity {
         return scene.getStep();
     }
 
-
     public static String askInfo(String info) {
         return scene.askInfo(info);
     }
 
-
     public static ArrayList<String> nameInfoOptions() {
         return scene.nameInfoOptions();
     }
-
 
     public static String getStageSummary() {
         return scene.getStageSummary();

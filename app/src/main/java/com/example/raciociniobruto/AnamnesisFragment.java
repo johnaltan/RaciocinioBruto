@@ -45,6 +45,7 @@ public class AnamnesisFragment extends Fragment {
             outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
             txtContent.setText(outputText);
         });*/
+
         outputText += "\nSolicitados:\n\n";
         for (StageItem i : MainActivity.getAskedItems()) outputText += i.getName() + ": " + i.getValue()+"\n";
         outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
@@ -56,54 +57,23 @@ public class AnamnesisFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(AnamnesisFragment.this)
                         .navigate(R.id.action_AnamnesisFragment_to_PhysicalExamFragment);
-
-
-
-
             }
         });
         view.findViewById(R.id.button_diagnostic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*outputText = scene.getStageSummary();
-                textView.setText(outputText);
-                options = 0;*/
+
             }
         });
         view.findViewById(R.id.button_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*switch (options){
-                    case 0:
-                        outputText += "HMP: " + scene.askInfo("HMP") + "\n";
-                        options++;
-                        break;
-                    case 1:
-                        outputText += "HMF: " + scene.askInfo("HMF") + "\n";
-                        options++;
-                        break;
-                    case 2:
-                        outputText += "HFS: " + scene.askInfo("HFS") + "\n";
-                        options++;
-                        break;
-                }
-                textView.setText(outputText);*/
 
              //   viewModel.setTitle(MainActivity.getStageName());
 
                 NavHostFragment.findNavController(AnamnesisFragment.this)
                         .navigate(R.id.action_AnamnesisFragment_to_InfoFragment);
-
-
-
             }
         });
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-      //  textView.setText("Voltei");
-
     }
 }
