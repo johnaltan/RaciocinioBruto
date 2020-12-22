@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static void nextStage() {
-        scene.nextStage();
-    }
-
-
     public static int getStep() {
         return scene.getStep();
     }

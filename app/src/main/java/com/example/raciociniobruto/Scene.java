@@ -31,6 +31,7 @@ public class Scene {
     public String askInfo(String info){
         String askedInfo = this.stages[stagePos].askInfo(info);
         if (askedInfo == null) askedInfo = "Info inexistente";
+        nextStep();
         return askedInfo;
     }
 

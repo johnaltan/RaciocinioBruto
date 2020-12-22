@@ -47,13 +47,13 @@ public class AnamnesisFragment extends Fragment {
         });*/
         outputText += "\nSolicitados:\n\n";
         for (StageItem i : MainActivity.getAskedItems()) outputText += i.getName() + ": " + i.getValue()+"\n";
+        outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
         txtContent.setText(outputText);
 
 
         view.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.nextStage();
                 NavHostFragment.findNavController(AnamnesisFragment.this)
                         .navigate(R.id.action_AnamnesisFragment_to_PhysicalExamFragment);
 

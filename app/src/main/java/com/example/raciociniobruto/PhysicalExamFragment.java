@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class PhysicalExamFragment extends Fragment {
-
+    TextView txtContent;
+    TextView txtTitle;
+    String outputText;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,6 +72,17 @@ public class PhysicalExamFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         MainActivity.setStagePos(1);
+
+        txtContent = (TextView) view.findViewById(R.id.txt_physicalExam_content);
+        txtTitle = (TextView) view.findViewById(R.id.txt_physicalExam_title);
+        txtTitle.setText(MainActivity.getStageName());
+        outputText = MainActivity.getStageSummary();
+        txtContent.setText(outputText);
+
+        outputText += "\nSolicitados:\n\n";
+        for (StageItem i : MainActivity.getAskedItems()) outputText += i.getName() + ": " + i.getValue()+"\n";
+        outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
+        txtContent.setText(outputText);
 
         view.findViewById(R.id.button_physicalExam_info).setOnClickListener(new View.OnClickListener() {
             @Override
