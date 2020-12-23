@@ -9,21 +9,21 @@ public class ClinicalCase {
     private Disease[] disease;
 
 
-    private Stage anamnesis;
-    private Stage physicalExam;
-    private Stage complementaryExam;
+    private StageBean anamnesis;
+    private StageBean physicalExam;
+    private StageBean complementaryExam;
 
     public ClinicalCase() {
     }
 
-    public ClinicalCase(Stage anamnesis, Disease[] disease, Stage physicalExam, Stage complementaryExam) {
+    public ClinicalCase(StageBean anamnesis, Disease[] disease, StageBean physicalExam, StageBean complementaryExam) {
         this.anamnesis = anamnesis;
         this.disease = disease;
         this.physicalExam = physicalExam;
         this.complementaryExam = complementaryExam;
     }
 
-    public Stage getAnamnesis() {
+    public StageBean getAnamnesis() {
         return anamnesis;
     }
 
@@ -31,11 +31,11 @@ public class ClinicalCase {
         return disease;
     }
 
-    public Stage getPhysicalExam() {
+    public StageBean getPhysicalExam() {
         return physicalExam;
     }
 
-    public Stage getComplementaryExam() {
+    public StageBean getComplementaryExam() {
         return complementaryExam;
     }
 }

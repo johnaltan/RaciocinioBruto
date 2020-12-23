@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ClinicalCase TESTgenerateClinicalCase (){
-        Stage anamnesis = new Stage("Anamnese");
+        StageBean anamnesis = new StageBean();
         anamnesis.addAvailableItem(new StageItem("Nome", "JMC"));
         anamnesis.addAvailableItem(new StageItem("Idade", "56"));
         anamnesis.addAvailableItem(new StageItem("Sexo", "Masculino"));
@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
         anamnesis.addItemSummaryName("QP");
         anamnesis.addItemSummaryName("HDA");
 
-        Stage physicalExam = new Stage("Exame Físico");
+        StageBean physicalExam = new StageBean();
         physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
 
-        Stage complementaryExams = new Stage("Exames complementares");
+        StageBean complementaryExams = new StageBean();
         complementaryExams.addAvailableItem(new StageItem("RX de tórax","Sem alterações, correlacionar com a clínica",new String[]{"raio x de torax","radiografia de torax"}));
 
         return new ClinicalCase(anamnesis, null, physicalExam, complementaryExams);

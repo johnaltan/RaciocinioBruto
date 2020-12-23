@@ -1,7 +1,5 @@
 package com.example.raciociniobruto;
 
-import androidx.core.content.res.TypedArrayUtils;
-
 import java.util.ArrayList;
 
 public class Scene {
@@ -13,9 +11,9 @@ public class Scene {
     public Scene (ClinicalCase clinicalCase){
         this.clinicalCase = clinicalCase;
         this.stages = new Stage[4];
-        this.stages[0] = clinicalCase.getAnamnesis();
-        this.stages[1] = clinicalCase.getPhysicalExam();
-        this.stages[2] = clinicalCase.getComplementaryExam();
+        this.stages[0] = new Stage("Anamnese",clinicalCase.getAnamnesis());
+        this.stages[1] = new Stage ("Exame físico",clinicalCase.getPhysicalExam());
+        this.stages[2] = new Stage ("Exames complementares",clinicalCase.getComplementaryExam());
         this.step = 0;
         this.stagePos = 0;
     }
@@ -51,7 +49,7 @@ public class Scene {
 
     public String getStageSummary (){
         String stageSummaryText = new String();
-        ArrayList<String> items = this.stages[stagePos].getSummaryItemsNames();
+        ArrayList<String> items = this.stages[stagePos].getItemsSummaryNames();
         for (String i : items)
             stageSummaryText += i + ": " + this.stages[stagePos].findSummaryItemValue(i) + "\n";
         return stageSummaryText;
