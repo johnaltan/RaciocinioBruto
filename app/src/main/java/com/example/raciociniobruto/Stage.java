@@ -37,14 +37,14 @@ public class Stage {
     public String findItem(String itemName, boolean ask){
         StageItem item = null;
         for (StageItem i : availableItems) {     //search for items in clinical case
-            if (i.getName().equalsIgnoreCase(itemName)) {
+            if (i.getName().equalsIgnoreCase(itemName) || i.isSynonym(itemName)) {
                 item = i;
                 break;
             }
         }
         if (item == null){
             for (StageItem i : itemsOptions) {  //search for items in whole options
-                if (i.getName().equalsIgnoreCase(itemName)) {
+                if (i.getName().equalsIgnoreCase(itemName) || i.isSynonym(itemName)) {
                     item = i;
                     break;
                 }
