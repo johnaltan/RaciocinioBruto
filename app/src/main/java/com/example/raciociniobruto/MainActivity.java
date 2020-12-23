@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static Scene scene;
-    private static final int PICK_JSON_FILE = 2;
 
     private ArrayList<ClinicalCase> clinicalCases;
 
@@ -26,40 +25,19 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) {
 
-            ClinicalCase clinicalCase = TESTgenerateClinicalCase();
+           // ClinicalCase clinicalCase = TESTgenerateClinicalCase();
 
            // clinicalCases = new ArrayList<ClinicalCase>();
            // clinicalCases.add(clinicalCase);
 
-            this.scene = new Scene(clinicalCase);
+            //this.scene = new Scene(clinicalCase);
 
-            openFile();
         }
 
 
     }
 
-    private void openFile() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/json");
 
-
-
-        startActivityForResult(intent, PICK_JSON_FILE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("ONACTIVITYRESULT","Voltou");
-        if (resultCode == Activity.RESULT_OK && requestCode == this.PICK_JSON_FILE) {
-            Log.d("ONACTIVITYRESULT","Respondeu: " + data.getData());
-            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer(this);
-            clinicalCases = transfer.loadCases(data.getData());
-            this.scene = new Scene(clinicalCases.get(0));
-        }
-    }
 
 
 
@@ -119,4 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setStagePos(int stagePos) {scene.setStagePos(stagePos);}
+
+    public static void setScene (Scene scene){
+        MainActivity.scene = scene;
+    }
 }

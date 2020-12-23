@@ -26,4 +26,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="physicalExam_content">Physical Exam content</string>
     <string name="complementaryExams_content">Complementary Exams Content</string>
+    <string name="button_seach_case">Escolher casos</string>
 </resources>
