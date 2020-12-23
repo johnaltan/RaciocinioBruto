@@ -28,36 +28,33 @@ public class Scene {
         return this.step;
     }
 
-    public String askInfo(String info){
-        String askedInfo = this.stages[stagePos].askInfo(info);
+    public String findItem(String info, boolean ask){
+        String askedInfo = this.stages[stagePos].findItem(info,ask);
         if (askedInfo == null) askedInfo = "Info inexistente";
-        nextStep();
+        if (ask) nextStep();
         return askedInfo;
     }
 
-    public ArrayList<String> nameInfoOptions(){
-        return this.stages[stagePos].nameInfoOptions();
+    public ArrayList<String> nameItemOptions(){
+        return this.stages[stagePos].nameItemOptions();
     }
 
-    public ArrayList<String> nameAskedInfos (){
-        return this.stages[stagePos].nameAskedInfos();
+    public ArrayList<String> nameAskedItems (){
+        return this.stages[stagePos].nameAskedItems();
     }
 
     public String getStageSummary (){
         String stageSummaryText = new String();
-        ArrayList<StageItem> items = this.stages[stagePos].getSummaryItems();
-        for (int i = 0; i < items.size(); i++)
-            stageSummaryText += items.get(i).getName() + ": " + items.get(i).getValue() + "\n";
+        ArrayList<String> items = this.stages[stagePos].getSummaryItemsNames();
+        for (String i : items)
+            stageSummaryText += i + ": " + this.stages[stagePos].findItem(i,false) + "\n";
         return stageSummaryText;
     }
 
     public String getStageName (){
-        return this.stages[stagePos].getStageName();
+        return this.stages[stagePos].getName();
     }
 
     public void setStagePos(int stagePos) {this.stagePos = stagePos;}
 
-    public ArrayList<StageItem> getStageItems (){
-        return this.stages[stagePos].getAskedItems();
-    }
 }

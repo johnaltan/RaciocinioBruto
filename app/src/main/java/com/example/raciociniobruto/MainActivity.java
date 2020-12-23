@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,30 +20,34 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null) {
-            Anamnesis anamnesis = new Anamnesis("Anamnese",
-                    new StageItem("Nome", "JMC"),
-                    new StageItem("Idade", "56"),
-                    new StageItem("Sexo", "Masculino"),
-                    new StageItem("Profissão", "Pedreiro"),
-                    new StageItem("QP", "Dor de cabeça"),
-                    new StageItem("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"),
-                    new StageItem("ISDAS", "SP"),
-                    new StageItem("HMP", "Nega comorbidades"),
-                    new StageItem("HMF", "Nega doenças na família"),
-                    new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
+            Stage anamnesis = new Stage("Anamnese");
+            anamnesis.addAvailableItem(new StageItem("Nome", "JMC"));
+            anamnesis.addAvailableItem(new StageItem("Idade", "56"));
+            anamnesis.addAvailableItem(new StageItem("Sexo", "Masculino"));
+            anamnesis.addAvailableItem(new StageItem("Profissão", "Pedreiro"));
+            anamnesis.addAvailableItem(new StageItem("QP", "Dor de cabeça"));
+            anamnesis.addAvailableItem(new StageItem("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"));
+            anamnesis.addAvailableItem(new StageItem("ISDAS", "SP"));
+            anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades"));
+            anamnesis.addAvailableItem(new StageItem("HMF", "Nega doenças na família"));
+            anamnesis.addAvailableItem(new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
+            anamnesis.addItemSummaryName("Nome");
+            anamnesis.addItemSummaryName("Idade");
+            anamnesis.addItemSummaryName("Sexo");
+            anamnesis.addItemSummaryName("HDA");
 
             ArrayList<ClinicalCase> clinicalCases = new ArrayList<ClinicalCase>();
-            ClinicalCase clinicalCase = new ClinicalCase(anamnesis, null, new PhysicalExam(), new ComplementaryExam());
+            ClinicalCase clinicalCase = new ClinicalCase(anamnesis, null, new Stage("Exame Físico"), new Stage("Exames complementares"));
             this.scene = new Scene(clinicalCase);
             clinicalCases.add(clinicalCase);
             ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer("clinicalCases.json",this);
             transfer.sendCases(clinicalCases);
 
-            ArrayList<ClinicalCase> readedCases = transfer.loadCases();
+            /*ArrayList<ClinicalCase> readedCases = transfer.loadCases();
 
             String str = new String();
-            for(ClinicalCase c : readedCases) str += c.getAnamnesis().getStageName();
-            Log.d("LIDOS",str);
+            for(ClinicalCase c : readedCases) str += c.getAnamnesis().getName();
+            Log.d("LIDOS",str);*/
         }
 
 
@@ -55,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
         return scene.getStep();
     }
 
-    public static String askInfo(String info) {
-        return scene.askInfo(info);
+    public static String findItem(String info, boolean ask) {
+        return scene.findItem(info,ask);
     }
 
     public static ArrayList<String> nameInfoOptions() {
-        return scene.nameInfoOptions();
+        return scene.nameItemOptions();
     }
 
     public static String getStageSummary() {
@@ -71,12 +74,8 @@ public class MainActivity extends AppCompatActivity {
         return scene.getStageName();
     }
 
-    public static ArrayList<String> nameAskedInfos () {
-        return scene.nameAskedInfos();
-    }
-
-    public static ArrayList<StageItem> getAskedItems (){
-        return scene.getStageItems();
+    public static ArrayList<String> nameAskedItems () {
+        return scene.nameAskedItems();
     }
 
     public static void setStagePos(int stagePos) {scene.setStagePos(stagePos);}

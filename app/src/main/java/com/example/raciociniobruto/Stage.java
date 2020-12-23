@@ -1,117 +1,100 @@
 package com.example.raciociniobruto;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.ArrayList;
 
-public abstract class Stage {
-    private String stageName;
-    private ArrayList<StageItem> availableStageItems;
-    private ArrayList<StageItem> stageItemOptions;
-    private ArrayList<StageItem> stageItemSummary;
-    private ArrayList<StageItem> askedStageItems;
+public class Stage {
+    private String name;
+    private ArrayList<StageItem> availableItems;
+    private ArrayList<StageItem> itemOptions;
+    private ArrayList<String> itemSummaryNames;
+    private ArrayList<String> askedItemsNames;
 
     public Stage() {
-        this.availableStageItems = new ArrayList<StageItem>();
-        this.stageItemSummary = new ArrayList<StageItem>();
-        this.stageItemOptions = new ArrayList<StageItem>();
-        this.askedStageItems = new ArrayList<StageItem>();
+        this.availableItems = new ArrayList<StageItem>();
+        this.itemOptions = new ArrayList<StageItem>();
+        this.itemSummaryNames = new ArrayList<String>();
+        this.askedItemsNames = new ArrayList<String>();
 
     }
 
-    public void setStageName(String stageName){
-        this.stageName = stageName;
+    public Stage (String name){
+        this.name = name;
+        this.availableItems = new ArrayList<StageItem>();
+        this.itemOptions = new ArrayList<StageItem>();
+        this.itemSummaryNames = new ArrayList<String>();
+        this.askedItemsNames = new ArrayList<String>();
+
     }
 
-    public String getStageName(){
-        return this.stageName;
+    public void setName(String name){
+        this.name = name;
     }
 
-    public String askInfo(String info){
+    public String getName(){
+        return this.name;
+    }
+
+    public String findItem(String itemName, boolean ask){
         StageItem item = null;
-        for (StageItem i : availableStageItems) {     //search for items in clinical case
-            if (i.getName().equalsIgnoreCase(info)) {
+        for (StageItem i : availableItems) {     //search for items in clinical case
+            if (i.getName().equalsIgnoreCase(itemName)) {
                 item = i;
                 break;
             }
         }
         if (item == null){
-            for (StageItem i : stageItemOptions) {  //search for items in whole options
-                if (i.getName().equalsIgnoreCase(info)) {
+            for (StageItem i : itemOptions) {  //search for items in whole options
+                if (i.getName().equalsIgnoreCase(itemName)) {
                     item = i;
                     break;
                 }
             }
         }
         if (item == null) {  //if neither clinical case or whole options, it doesn't exist
-            askedStageItems.add(new StageItem(info,null));
+            if(ask) askedItemsNames.add(itemName);
             return null;
         }
-        askedStageItems.add(item);
+        if (ask) askedItemsNames.add(item.getName());
         return item.getValue();
     }
 
-    public ArrayList<String> nameInfoOptions() {
-        return informStageItemsNames(stageItemOptions);
-    }
 
-    public ArrayList<String> nameAskedInfos(){
-        return informStageItemsNames(askedStageItems);
-
-    }
-
-    public ArrayList<StageItem> getSummaryItems (){
-        return this.stageItemSummary;
-    }
-
-    public void addAvailableStageItem(StageItem newItem){
-        this.availableStageItems.add(newItem);
-    }
-
-    public void addStageItemSummary (StageItem newItem){
-        this.stageItemSummary.add(newItem);
-    }
-
-    public ArrayList<StageItem> getAvailableStageItems() {
-        return availableStageItems;
-    }
-
-    public void setAvailableStageItems(ArrayList<StageItem> availableStageItems) {
-        this.availableStageItems = availableStageItems;
-    }
-
-    public void setStageItemOptions(ArrayList<StageItem> stageItemOptions) {
-        this.stageItemOptions = stageItemOptions;
-    }
-
-    public ArrayList<StageItem> getStageItemSummary() {
-        return stageItemSummary;
-    }
-
-    public ArrayList<StageItem> getAskedItems (){
-        return this.askedStageItems;
-    }
-
-    public void setStageItemSummary(ArrayList<StageItem> stageItemSummary) {
-        this.stageItemSummary = stageItemSummary;
-    }
-
-    private ArrayList<String> informStageItemsNames (ArrayList<StageItem> e){
+    public ArrayList<String> nameItemOptions() {
         ArrayList<String> infoOptions = new ArrayList<String>();
-        for (StageItem i : e) infoOptions.add(i.getName());
+        for (StageItem i : itemOptions) infoOptions.add(i.getName());
         return infoOptions;
     }
 
-    public ArrayList<StageItem> getStageItemOptions() {
-        return stageItemOptions;
+    public ArrayList<String> nameAskedItems(){
+        return this.askedItemsNames;
     }
 
-    public ArrayList<StageItem> getAskedStageItems() {
-        return askedStageItems;
+    public ArrayList<String> getSummaryItemsNames (){
+        return this.itemSummaryNames;
     }
 
-    public void setAskedStageItems(ArrayList<StageItem> askedStageItems) {
-        this.askedStageItems = askedStageItems;
+    public void addAvailableItem(StageItem newItem){
+        this.availableItems.add(newItem);
     }
+
+    public void addItemSummaryName (String newItem){
+        this.itemSummaryNames.add(newItem);
+    }
+
+    public ArrayList<StageItem> getAvailableItems() {
+        return availableItems;
+    }
+
+    public void setAvailableItems(ArrayList<StageItem> availableItems) {
+        this.availableItems = availableItems;
+    }
+
+    public void setItemOptions(ArrayList<StageItem> itemOptions) {
+        this.itemOptions = itemOptions;
+    }
+
+    public ArrayList<StageItem> getItemOptions() {
+        return itemOptions;
+    }
+
 }

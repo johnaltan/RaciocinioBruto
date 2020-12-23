@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ComplementaryExamsFragment#newInstance} factory method to
@@ -80,8 +82,8 @@ public class ComplementaryExamsFragment extends Fragment {
         txtContent.setText(outputText);
 
         outputText += "\nSolicitados:\n\n";
-        for (StageItem i : MainActivity.getAskedItems()) outputText += i.getName() + ": " + i.getValue()+"\n";
-        outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
+        ArrayList<String> namesAsked = MainActivity.nameAskedItems();
+        for (String i : namesAsked) outputText += i + ": " + MainActivity.findItem(i,false)+"\n";        outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
         txtContent.setText(outputText);
 
         view.findViewById(R.id.button_complementaryExams_info).setOnClickListener(new View.OnClickListener() {

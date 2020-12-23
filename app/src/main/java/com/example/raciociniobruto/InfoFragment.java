@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
@@ -49,7 +48,8 @@ public class InfoFragment extends Fragment {
         //viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
 
         txtTitle.setText("Solicitar info: " +MainActivity.getStageName());
-        for(String s : MainActivity.nameAskedInfos()) stringTxtContent += s + "\n";
+        ArrayList<String> namesAsked = MainActivity.nameAskedItems();
+        for(String s : namesAsked) stringTxtContent += s + "\n";
         txtContent.setText(stringTxtContent);
 
         view.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class InfoFragment extends Fragment {
                 String i = editTextOption.getText().toString();
 
                // infoAdded.add(i);
-                MainActivity.askInfo(i);
+                MainActivity.findItem(i,true);
                 stringTxtContent += i + "\n";
                 txtContent.setText(stringTxtContent);
 

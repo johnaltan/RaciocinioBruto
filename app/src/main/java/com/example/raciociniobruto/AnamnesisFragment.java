@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+
+import java.util.ArrayList;
 
 public class AnamnesisFragment extends Fragment {
     TextView txtContent;
@@ -47,7 +48,8 @@ public class AnamnesisFragment extends Fragment {
         });*/
 
         outputText += "\nSolicitados:\n\n";
-        for (StageItem i : MainActivity.getAskedItems()) outputText += i.getName() + ": " + i.getValue()+"\n";
+        ArrayList<String> namesAsked = MainActivity.nameAskedItems();
+        for (String i : namesAsked) outputText += i + ": " + MainActivity.findItem(i,false)+"\n";
         outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
         txtContent.setText(outputText);
 

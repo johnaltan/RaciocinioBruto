@@ -6,22 +6,24 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ClinicalCase {
-    private Anamnesis anamnesis;
     private Disease[] disease;
-    private PhysicalExam physicalExam;
-    private ComplementaryExam complementaryExam;
+
+
+    private Stage anamnesis;
+    private Stage physicalExam;
+    private Stage complementaryExam;
 
     public ClinicalCase() {
     }
 
-    public ClinicalCase(Anamnesis anamnesis, Disease[] disease, PhysicalExam physicalExam, ComplementaryExam complementaryExam) {
+    public ClinicalCase(Stage anamnesis, Disease[] disease, Stage physicalExam, Stage complementaryExam) {
         this.anamnesis = anamnesis;
         this.disease = disease;
         this.physicalExam = physicalExam;
         this.complementaryExam = complementaryExam;
     }
 
-    public Anamnesis getAnamnesis() {
+    public Stage getAnamnesis() {
         return anamnesis;
     }
 
@@ -29,11 +31,11 @@ public class ClinicalCase {
         return disease;
     }
 
-    public PhysicalExam getPhysicalExam() {
+    public Stage getPhysicalExam() {
         return physicalExam;
     }
 
-    public ComplementaryExam getComplementaryExam() {
+    public Stage getComplementaryExam() {
         return complementaryExam;
     }
 }
