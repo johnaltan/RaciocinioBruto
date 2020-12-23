@@ -47,9 +47,15 @@ public class AnamnesisFragment extends Fragment {
             txtContent.setText(outputText);
         });*/
 
-        outputText += "\nSolicitados:\n\n";
-        ArrayList<String> namesAsked = MainActivity.nameAskedItems();
-        for (String i : namesAsked) outputText += i + ": " + MainActivity.findItem(i,false)+"\n";
+        outputText += "\nSOLICITADOS:\nEncontrados:\n\n";
+        ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
+        for (String i : namesAsked) outputText += i + ": " + MainActivity.findAskedItemValue(i)+"\n";
+        if (MainActivity.nameNotFoundItems().size() > 0){
+            outputText += "\nInexistentes:\n";
+            namesAsked = MainActivity.nameNotFoundItems();
+            for (String i : namesAsked) outputText += i+"\n";
+
+        }
         outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
         txtContent.setText(outputText);
 

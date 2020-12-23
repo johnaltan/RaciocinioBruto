@@ -1,5 +1,7 @@
 package com.example.raciociniobruto;
 
+import androidx.core.content.res.TypedArrayUtils;
+
 import java.util.ArrayList;
 
 public class Scene {
@@ -28,26 +30,30 @@ public class Scene {
         return this.step;
     }
 
-    public String findItem(String info, boolean ask){
-        String askedInfo = this.stages[stagePos].findItem(info,ask);
+    public String askItem(String info){
+        String askedInfo = this.stages[stagePos].askItem(info);
         if (askedInfo == null) askedInfo = "Info inexistente";
-        if (ask) nextStep();
+        nextStep();
         return askedInfo;
     }
 
-    public ArrayList<String> nameItemOptions(){
-        return this.stages[stagePos].nameItemsOptions();
+    public String findAskedItemValue (String itemName){
+        return this.stages[stagePos].findAskedItemValue(itemName);
     }
 
-    public ArrayList<String> nameAskedItems (){
-        return this.stages[stagePos].nameAskedItems();
+    public ArrayList<String> nameAskedFoundItems (){
+        return this.stages[stagePos].nameAskedFoundItems();
+    }
+
+    public ArrayList<String> nameNotFoundItems(){
+        return this.stages[stagePos].nameNotFoundItems();
     }
 
     public String getStageSummary (){
         String stageSummaryText = new String();
         ArrayList<String> items = this.stages[stagePos].getSummaryItemsNames();
         for (String i : items)
-            stageSummaryText += i + ": " + this.stages[stagePos].findItem(i,false) + "\n";
+            stageSummaryText += i + ": " + this.stages[stagePos].findSummaryItemValue(i) + "\n";
         return stageSummaryText;
     }
 

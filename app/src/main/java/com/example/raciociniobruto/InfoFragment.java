@@ -48,8 +48,15 @@ public class InfoFragment extends Fragment {
         //viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
 
         txtTitle.setText("Solicitar info: " +MainActivity.getStageName());
-        ArrayList<String> namesAsked = MainActivity.nameAskedItems();
-        for(String s : namesAsked) stringTxtContent += s + "\n";
+        ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
+        if (namesAsked.size() > 0) {
+            stringTxtContent += "Encontrados:\n";
+            for (String s : namesAsked) stringTxtContent += s + "\n";
+        }
+        if (MainActivity.nameNotFoundItems().size() > 0){
+            stringTxtContent += "\nInexistentes:\n";
+            for (String s : MainActivity.nameNotFoundItems()) stringTxtContent += s + "\n";
+        }
         txtContent.setText(stringTxtContent);
 
         view.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
@@ -70,7 +77,7 @@ public class InfoFragment extends Fragment {
                 String i = editTextOption.getText().toString();
 
                // infoAdded.add(i);
-                MainActivity.findItem(i,true);
+                MainActivity.askItem(i);
                 stringTxtContent += i + "\n";
                 txtContent.setText(stringTxtContent);
 

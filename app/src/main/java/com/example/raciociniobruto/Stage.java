@@ -5,25 +5,24 @@ import java.util.ArrayList;
 public class Stage {
     private String name;
     private ArrayList<StageItem> availableItems;
-    private ArrayList<StageItem> itemsOptions;
     private ArrayList<String> itemsSummaryNames;
-    private ArrayList<String> askedItemsNames;
+    private ArrayList<Integer> askedFoundItemsIndexes;
+    private ArrayList<String> notFoundItemsNames;
 
     public Stage() {
         this.availableItems = new ArrayList<StageItem>();
-        this.itemsOptions = new ArrayList<StageItem>();
+        this.askedFoundItemsIndexes = new ArrayList<Integer>();
+        this.notFoundItemsNames = new ArrayList<String>();
         this.itemsSummaryNames = new ArrayList<String>();
-        this.askedItemsNames = new ArrayList<String>();
 
     }
 
     public Stage (String name){
         this.name = name;
         this.availableItems = new ArrayList<StageItem>();
-        this.itemsOptions = new ArrayList<StageItem>();
         this.itemsSummaryNames = new ArrayList<String>();
-        this.askedItemsNames = new ArrayList<String>();
-
+        this.askedFoundItemsIndexes = new ArrayList<Integer>();
+        this.notFoundItemsNames = new ArrayList<String>();
     }
 
     public void setName(String name){
@@ -34,39 +33,56 @@ public class Stage {
         return this.name;
     }
 
-    public String findItem(String itemName, boolean ask){
-        StageItem item = null;
-        for (StageItem i : availableItems) {     //search for items in clinical case
+    public String askItem(String itemName){
+        String itemValue = null;
+        for (int x = 0;x < availableItems.size(); x++) {
+            StageItem i = availableItems.get(x);
             if (i.getName().equalsIgnoreCase(itemName) || i.isSynonym(itemName)) {
-                item = i;
+                itemValue = i.getValue();
+                askedFoundItemsIndexes.add(x); //save index founded
                 break;
             }
         }
-        if (item == null){
-            for (StageItem i : itemsOptions) {  //search for items in whole options
-                if (i.getName().equalsIgnoreCase(itemName) || i.isSynonym(itemName)) {
-                    item = i;
+        if (itemValue == null) notFoundItemsNames.add(itemName);
+        return itemValue;
+    }
+
+    public String findAskedItemValue (String itemName){
+        String itemValue = null;
+        for (Integer i : askedFoundItemsIndexes){
+            StageItem item = availableItems.get(i);
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                itemValue = item.getValue();
+                break;
+            }
+        }
+        return itemValue;
+    }
+
+    public ArrayList<String> nameAskedFoundItems(){
+        ArrayList<String> namesAskedItems = new ArrayList<String>();
+        for (Integer i : askedFoundItemsIndexes) namesAskedItems.add(availableItems.get(i).getName());
+        return namesAskedItems;
+    }
+
+    public ArrayList<String> nameNotFoundItems(){
+        return this.notFoundItemsNames;
+    }
+
+    public String findSummaryItemValue (String itemName){
+        String itemValue = null;
+        boolean found = false;
+        for (int i = 0; i < availableItems.size() && !found; i++) {
+            for (String summaryName : itemsSummaryNames) {
+                StageItem item = availableItems.get(i);
+                if (summaryName.equalsIgnoreCase(item.getName()) && itemName.equalsIgnoreCase(item.getName())) { //is summary item AND the searched?
+                    itemValue = item.getValue();
+                    found = true;
                     break;
                 }
             }
         }
-        if (item == null) {  //if neither clinical case or whole options, it doesn't exist
-            if(ask) askedItemsNames.add(itemName);
-            return null;
-        }
-        if (ask) askedItemsNames.add(item.getName());
-        return item.getValue();
-    }
-
-
-    public ArrayList<String> nameItemsOptions() {
-        ArrayList<String> infoOptions = new ArrayList<String>();
-        for (StageItem i : itemsOptions) infoOptions.add(i.getName());
-        return infoOptions;
-    }
-
-    public ArrayList<String> nameAskedItems(){
-        return this.askedItemsNames;
+        return itemValue;
     }
 
     public ArrayList<String> getSummaryItemsNames (){
@@ -88,13 +104,4 @@ public class Stage {
     public void setAvailableItems(ArrayList<StageItem> availableItems) {
         this.availableItems = availableItems;
     }
-
-    public void setItemsOptions(ArrayList<StageItem> itemsOptions) {
-        this.itemsOptions = itemsOptions;
-    }
-
-    public ArrayList<StageItem> getItemsOptions() {
-        return itemsOptions;
-    }
-
 }

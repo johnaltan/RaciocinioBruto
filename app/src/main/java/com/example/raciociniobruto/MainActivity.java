@@ -73,12 +73,8 @@ public class MainActivity extends AppCompatActivity {
         return scene.getStep();
     }
 
-    public static String findItem(String info, boolean ask) {
-        return scene.findItem(info,ask);
-    }
-
-    public static ArrayList<String> nameInfoOptions() {
-        return scene.nameItemOptions();
+    public static String askItem(String info) {
+        return scene.askItem(info);
     }
 
     public static String getStageSummary() {
@@ -89,8 +85,14 @@ public class MainActivity extends AppCompatActivity {
         return scene.getStageName();
     }
 
-    public static ArrayList<String> nameAskedItems () {
-        return scene.nameAskedItems();
+    public static ArrayList<String> nameAskedFoundItems () {
+        return scene.nameAskedFoundItems();
+    }
+
+    public static ArrayList<String> nameNotFoundItems () {return scene.nameNotFoundItems();}
+
+    public static String findAskedItemValue (String itemName){
+        return scene.findAskedItemValue(itemName);
     }
 
     public static void setStagePos(int stagePos) {scene.setStagePos(stagePos);}
