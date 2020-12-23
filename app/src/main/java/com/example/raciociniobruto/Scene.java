@@ -36,7 +36,7 @@ public class Scene {
     }
 
     public ArrayList<String> nameItemOptions(){
-        return this.stages[stagePos].nameItemOptions();
+        return this.stages[stagePos].nameItemsOptions();
     }
 
     public ArrayList<String> nameAskedItems (){

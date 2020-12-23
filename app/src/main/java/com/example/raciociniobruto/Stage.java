@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class Stage {
     private String name;
     private ArrayList<StageItem> availableItems;
-    private ArrayList<StageItem> itemOptions;
-    private ArrayList<String> itemSummaryNames;
+    private ArrayList<StageItem> itemsOptions;
+    private ArrayList<String> itemsSummaryNames;
     private ArrayList<String> askedItemsNames;
 
     public Stage() {
         this.availableItems = new ArrayList<StageItem>();
-        this.itemOptions = new ArrayList<StageItem>();
-        this.itemSummaryNames = new ArrayList<String>();
+        this.itemsOptions = new ArrayList<StageItem>();
+        this.itemsSummaryNames = new ArrayList<String>();
         this.askedItemsNames = new ArrayList<String>();
 
     }
@@ -20,8 +20,8 @@ public class Stage {
     public Stage (String name){
         this.name = name;
         this.availableItems = new ArrayList<StageItem>();
-        this.itemOptions = new ArrayList<StageItem>();
-        this.itemSummaryNames = new ArrayList<String>();
+        this.itemsOptions = new ArrayList<StageItem>();
+        this.itemsSummaryNames = new ArrayList<String>();
         this.askedItemsNames = new ArrayList<String>();
 
     }
@@ -43,7 +43,7 @@ public class Stage {
             }
         }
         if (item == null){
-            for (StageItem i : itemOptions) {  //search for items in whole options
+            for (StageItem i : itemsOptions) {  //search for items in whole options
                 if (i.getName().equalsIgnoreCase(itemName)) {
                     item = i;
                     break;
@@ -59,9 +59,9 @@ public class Stage {
     }
 
 
-    public ArrayList<String> nameItemOptions() {
+    public ArrayList<String> nameItemsOptions() {
         ArrayList<String> infoOptions = new ArrayList<String>();
-        for (StageItem i : itemOptions) infoOptions.add(i.getName());
+        for (StageItem i : itemsOptions) infoOptions.add(i.getName());
         return infoOptions;
     }
 
@@ -70,7 +70,7 @@ public class Stage {
     }
 
     public ArrayList<String> getSummaryItemsNames (){
-        return this.itemSummaryNames;
+        return this.itemsSummaryNames;
     }
 
     public void addAvailableItem(StageItem newItem){
@@ -78,7 +78,7 @@ public class Stage {
     }
 
     public void addItemSummaryName (String newItem){
-        this.itemSummaryNames.add(newItem);
+        this.itemsSummaryNames.add(newItem);
     }
 
     public ArrayList<StageItem> getAvailableItems() {
@@ -89,12 +89,12 @@ public class Stage {
         this.availableItems = availableItems;
     }
 
-    public void setItemOptions(ArrayList<StageItem> itemOptions) {
-        this.itemOptions = itemOptions;
+    public void setItemsOptions(ArrayList<StageItem> itemsOptions) {
+        this.itemsOptions = itemsOptions;
     }
 
-    public ArrayList<StageItem> getItemOptions() {
-        return itemOptions;
+    public ArrayList<StageItem> getItemsOptions() {
+        return itemsOptions;
     }
 
 }

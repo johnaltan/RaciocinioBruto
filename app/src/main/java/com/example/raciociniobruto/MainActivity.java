@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null) {
-            Stage anamnesis = new Stage("Anamnese");
+            /*Stage anamnesis = new Stage("Anamnese");
             anamnesis.addAvailableItem(new StageItem("Nome", "JMC"));
             anamnesis.addAvailableItem(new StageItem("Idade", "56"));
             anamnesis.addAvailableItem(new StageItem("Sexo", "Masculino"));
@@ -39,15 +39,16 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<ClinicalCase> clinicalCases = new ArrayList<ClinicalCase>();
             ClinicalCase clinicalCase = new ClinicalCase(anamnesis, null, new Stage("Exame Físico"), new Stage("Exames complementares"));
             this.scene = new Scene(clinicalCase);
-            clinicalCases.add(clinicalCase);
+            clinicalCases.add(clinicalCase);*/
             ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer("clinicalCases.json",this);
-            transfer.sendCases(clinicalCases);
+            //transfer.sendCases(clinicalCases);
 
-            /*ArrayList<ClinicalCase> readedCases = transfer.loadCases();
+            ArrayList<ClinicalCase> readedCases = transfer.loadCases();
+            this.scene = new Scene(readedCases.get(1));
 
             String str = new String();
             for(ClinicalCase c : readedCases) str += c.getAnamnesis().getName();
-            Log.d("LIDOS",str);*/
+            Log.d("LIDOS",str);
         }
 
 
