@@ -1,5 +1,8 @@
 package com.example.raciociniobruto;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,7 +13,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static Scene scene;
+    private static final int PICK_JSON_FILE = 2;
 
+    private ArrayList<ClinicalCase> clinicalCases;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,22 +28,40 @@ public class MainActivity extends AppCompatActivity {
 
             ClinicalCase clinicalCase = TESTgenerateClinicalCase();
 
-            ArrayList<ClinicalCase> clinicalCases = new ArrayList<ClinicalCase>();
-            clinicalCases.add(clinicalCase);
-            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer("clinicalCases.json",this);
-
-            //transfer.sendCases(clinicalCases);
-
-            /*ArrayList<ClinicalCase> readedCases = transfer.loadCases();
-            clinicalCase = readedCases.get(1);*/
-
-
+           // clinicalCases = new ArrayList<ClinicalCase>();
+           // clinicalCases.add(clinicalCase);
 
             this.scene = new Scene(clinicalCase);
+
+            openFile();
         }
 
 
     }
+
+    private void openFile() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+
+
+
+        startActivityForResult(intent, PICK_JSON_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("ONACTIVITYRESULT","Voltou");
+        if (resultCode == Activity.RESULT_OK && requestCode == this.PICK_JSON_FILE) {
+            Log.d("ONACTIVITYRESULT","Respondeu: " + data.getData());
+            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer(this);
+            clinicalCases = transfer.loadCases(data.getData());
+            this.scene = new Scene(clinicalCases.get(0));
+        }
+    }
+
+
 
     private ClinicalCase TESTgenerateClinicalCase (){
         Stage anamnesis = new Stage("Anamnese");
@@ -49,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         anamnesis.addAvailableItem(new StageItem("QP", "Dor de cabeça"));
         anamnesis.addAvailableItem(new StageItem("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"));
         anamnesis.addAvailableItem(new StageItem("ISDAS", "SP"));
-        anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades"));
+        anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades",new String[]{"comorbidades","doenças prévias","medicações em uso","MUC"}));
         anamnesis.addAvailableItem(new StageItem("HMF", "Nega doenças na família"));
         anamnesis.addAvailableItem(new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
         anamnesis.addItemSummaryName("Nome");
@@ -59,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         anamnesis.addItemSummaryName("HDA");
 
         Stage physicalExam = new Stage("Exame Físico");
-        physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais"}));
+        physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
 
         Stage complementaryExams = new Stage("Exames complementares");
         complementaryExams.addAvailableItem(new StageItem("RX de tórax","Sem alterações, correlacionar com a clínica",new String[]{"raio x de torax","radiografia de torax"}));

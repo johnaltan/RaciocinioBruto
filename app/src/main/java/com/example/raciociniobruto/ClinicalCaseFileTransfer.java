@@ -3,6 +3,7 @@ package com.example.raciociniobruto;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,21 +25,20 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
-    private Context context;
-    private String fileName;
+
+    Context context;
 
 
-    public ClinicalCaseFileTransfer(String fileName, Context context){
+    public ClinicalCaseFileTransfer(Context context){
         this.context = context;
-        this.fileName = fileName;
     }
     @Override
-    public ArrayList<ClinicalCase> loadCases() {
+    public ArrayList<ClinicalCase> loadCases(Uri uri) {
         FileInputStream fis = null;
         ArrayList<ClinicalCase> loadedClinicalCases = null;
 
         try {
-            fis = new FileInputStream(new File(context.getExternalFilesDir(null),fileName));
+            fis = (FileInputStream) context.getContentResolver().openInputStream(uri);
 
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
@@ -67,7 +67,7 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
     }
 
     @Override
-    public void sendCases(ArrayList<ClinicalCase> clinicalCases) {
+    public void sendCases(ArrayList<ClinicalCase> clinicalCases, Uri uri) {
 
 
         FileOutputStream fos = null;
@@ -75,11 +75,10 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
             Gson gson = new Gson();
             String gsonString = gson.toJson(clinicalCases);
 
-            fos = new FileOutputStream(new File(context.getExternalFilesDir(null),fileName));
+            fos = (FileOutputStream) context.getContentResolver().openOutputStream(uri);
             fos.write(gsonString.getBytes());
             Log.d("GSON file written",gsonString);
 
-            Log.d("FILESAVED","Saved to " + this.context.getExternalFilesDir(null) + "/" + this.fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
