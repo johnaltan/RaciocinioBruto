@@ -20,6 +20,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_complementaryExams_title">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
             <TextView
                 android:id="@+id/txt_complementaryExams_content"
                 android:layout_width="match_parent"
@@ -31,6 +36,7 @@
                 android:layout_marginRight="8dp"
                 android:text="@string/complementaryExams_content"
                 android:textSize="18sp" />
+        </LinearLayout>
     </ScrollView>
 
     <Button
