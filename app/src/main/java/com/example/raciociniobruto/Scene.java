@@ -43,16 +43,23 @@ public class Scene {
         return this.stages[stagePos].nameAskedFoundItems();
     }
 
+    public ArrayList<StageItem> getAskedFoundItems(){
+        return this.stages[stagePos].getAskedFoundItems();
+    }
+
     public ArrayList<String> nameNotFoundItems(){
         return this.stages[stagePos].nameNotFoundItems();
     }
 
+
+    public ArrayList<StageItem> getNotFoundItems(){
+        return this.stages[stagePos].getNotFoundItems();
+    }
+
+
     public String getStageSummary (){
-        String stageSummaryText = new String();
-        ArrayList<String> items = this.stages[stagePos].getItemsSummaryNames();
-        for (String i : items)
-            stageSummaryText += i + ": " + this.stages[stagePos].findSummaryItemValue(i) + "\n";
-        return stageSummaryText;
+
+        return this.stages[stagePos].getSummary();
     }
 
     public String getStageName (){

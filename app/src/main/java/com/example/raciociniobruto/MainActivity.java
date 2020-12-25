@@ -53,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
         anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades",new String[]{"comorbidades","doenças prévias","medicações em uso","MUC"}));
         anamnesis.addAvailableItem(new StageItem("HMF", "Nega doenças na família"));
         anamnesis.addAvailableItem(new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
-        anamnesis.addItemSummaryName("Nome");
-        anamnesis.addItemSummaryName("Idade");
-        anamnesis.addItemSummaryName("Sexo");
-        anamnesis.addItemSummaryName("QP");
-        anamnesis.addItemSummaryName("HDA");
+
 
         StageBean physicalExam = new StageBean();
         physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
@@ -100,5 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setScene (Scene scene){
         MainActivity.scene = scene;
+    }
+
+    public static ArrayList<StageItem> getAskedFoundItems(){
+        return scene.getAskedFoundItems();
+    }
+
+    public static ArrayList<StageItem> getNotFoundItems(){
+        return scene.getNotFoundItems();
     }
 }

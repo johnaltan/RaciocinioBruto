@@ -68,35 +68,36 @@ public class Stage {
         return namesAskedItems;
     }
 
+    public ArrayList<StageItem> getAskedFoundItems(){
+        ArrayList<StageItem> stageItems = new ArrayList<StageItem>();
+        for(Integer i : askedFoundItemsIndexes) stageItems.add(stageBean.getAvailableItems().get(i));
+        return stageItems;
+    }
+
     public ArrayList<String> nameNotFoundItems(){
         return this.notFoundItemsNames;
     }
 
-    public String findSummaryItemValue (String itemName){
-        String itemValue = null;
-        boolean found = false;
-        for (int i = 0; i < stageBean.getAvailableItems().size() && !found; i++) {
-            for (String summaryName : stageBean.getItemsSummaryNames()) {
-                StageItem item = stageBean.getAvailableItems().get(i);
-                if (summaryName.equalsIgnoreCase(item.getName()) && itemName.equalsIgnoreCase(item.getName())) { //is summary item AND the searched?
-                    itemValue = item.getValue();
-                    found = true;
-                    break;
-                }
-            }
-        }
-        return itemValue;
+    public ArrayList<StageItem> getNotFoundItems(){
+        ArrayList<StageItem> stageItems = new ArrayList<StageItem>();
+        for(String i : this.notFoundItemsNames) stageItems.add(new StageItem(i,null));
+        return stageItems;
     }
 
-    public ArrayList<String> getItemsSummaryNames(){
-        return this.stageBean.getItemsSummaryNames();
+    public ArrayList<String> getNotFoundItemsNames() {
+        return notFoundItemsNames;
+    }
+
+    public void setNotFoundItemsNames(ArrayList<String> notFoundItemsNames) {
+        this.notFoundItemsNames = notFoundItemsNames;
     }
 
     public void addAvailableItem(StageItem newItem){
         this.stageBean.getAvailableItems().add(newItem);
     }
 
-    public void addItemSummaryName (String newItem){
-        this.stageBean.getItemsSummaryNames().add(newItem);
+    public String getSummary(){
+        return this.stageBean.getSummary();
     }
+
 }

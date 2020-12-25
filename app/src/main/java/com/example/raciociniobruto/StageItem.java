@@ -16,6 +16,7 @@ public class StageItem {
     public StageItem(String name, String value) {
         this.name = name;
         this.value = value;
+        this.synonyms = null;
     }
 
     public StageItem(String name, String value, String [] synonyms) {

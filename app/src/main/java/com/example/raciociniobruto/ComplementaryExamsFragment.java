@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,10 @@ import java.util.ArrayList;
 public class ComplementaryExamsFragment extends Fragment {
     TextView txtContent;
     TextView txtTitle;
+    TextView txtSummary;
+    TextView txtScore;
     String outputText;
+    private StageItemAdapter stageItemAdapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -76,20 +80,42 @@ public class ComplementaryExamsFragment extends Fragment {
         MainActivity.setStagePos(2);
 
         txtContent = (TextView) view.findViewById(R.id.txt_complementaryExams_content);
+        txtSummary = (TextView) view.findViewById(R.id.txt_complementaryExams_summary);
+        txtScore = (TextView) view.findViewById(R.id.txt_complementaryExams_score);
+        txtSummary.setText("Resumo: " + MainActivity.getStageSummary());
+        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()));
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.recycler_view_complementaryExams);
+
+        stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());
+
+        rv.setAdapter(stageItemAdapter);
+
+
         txtTitle = (TextView) view.findViewById(R.id.txt_complementaryExams_title);
         txtTitle.setText(MainActivity.getStageName());
-        outputText = MainActivity.getStageSummary();
-        txtContent.setText(outputText);
+        outputText = new String();
+        //outputText = MainActivity.getStageSummary();
 
-        outputText += "\nSOLICITADOS:\nEncontrados:\n\n";
+
+        //viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+/*        viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
+            outputText += "\nSolicitados:\n\n";
+            for (String i : s) outputText += i + ": " + MainActivity.askInfo(i) + "\n";
+            outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
+            txtContent.setText(outputText);
+        });*/
+
+        //outputText += "\nSOLICITADOS:\nEncontrados:\n\n";
         ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
-        for (String i : namesAsked) outputText += i + ": " + MainActivity.findAskedItemValue(i)+"\n";
+        //for (String i : namesAsked) outputText += i + ": " + MainActivity.findAskedItemValue(i)+"\n";
         if (MainActivity.nameNotFoundItems().size() > 0){
-            outputText += "\nInexistentes:\n";
+            outputText += "\nInexistentes: ";
             namesAsked = MainActivity.nameNotFoundItems();
-            for (String i : namesAsked) outputText += i+"\n";
+            for (String i : namesAsked) outputText += i+", ";
         }
-        outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
+        if(outputText.contains(",")) outputText = outputText.substring(0,outputText.lastIndexOf(",")) + ".";
+
         txtContent.setText(outputText);
 
         view.findViewById(R.id.button_complementaryExams_info).setOnClickListener(new View.OnClickListener() {
