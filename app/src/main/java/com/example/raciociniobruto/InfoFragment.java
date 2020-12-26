@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -57,6 +58,7 @@ public class InfoFragment extends Fragment {
             stringTxtContent += "\nInexistentes:\n";
             for (String s : MainActivity.nameNotFoundItems()) stringTxtContent += s + "\n";
         }
+        stringTxtContent += "\n\nRecém registradas:\n";
         txtContent.setText(stringTxtContent);
 
         view.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
@@ -77,7 +79,9 @@ public class InfoFragment extends Fragment {
                 String i = editTextOption.getText().toString();
 
                // infoAdded.add(i);
-                MainActivity.askItem(i);
+                StageItem item = MainActivity.askItem(i);
+                if(item == null) Toast.makeText(view.getContext(),"Info não encontrada.", Toast.LENGTH_LONG).show();
+                else Toast.makeText(view.getContext(),"Info encontrada e registrada como: " + item.getName() + ".", Toast.LENGTH_LONG).show();
                 stringTxtContent += i + "\n";
                 txtContent.setText(stringTxtContent);
 

@@ -36,18 +36,18 @@ public class Stage {
         return this.name;
     }
 
-    public String askItem(String itemName){
-        String itemValue = null;
+    public StageItem askItem(String itemName){
+        StageItem item = null;
         for (int x = 0;x < stageBean.getAvailableItems().size(); x++) {
             StageItem i = stageBean.getAvailableItems().get(x);
             if (i.getName().equalsIgnoreCase(itemName) || i.isSynonym(itemName)) {
-                itemValue = i.getValue();
+                item = stageBean.getAvailableItems().get(x);
                 askedFoundItemsIndexes.add(x); //save index founded
                 break;
             }
         }
-        if (itemValue == null) notFoundItemsNames.add(itemName);
-        return itemValue;
+        if (item == null) notFoundItemsNames.add(itemName);
+        return item;
     }
 
     public String findAskedItemValue (String itemName){

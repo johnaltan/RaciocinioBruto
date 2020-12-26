@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         return scene.getStep();
     }
 
-    public static String askItem(String info) {
+    public static StageItem askItem(String info) {
         return scene.askItem(info);
     }
 

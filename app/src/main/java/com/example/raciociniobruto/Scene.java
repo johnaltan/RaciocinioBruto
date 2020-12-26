@@ -28,9 +28,8 @@ public class Scene {
         return this.step;
     }
 
-    public String askItem(String info){
-        String askedInfo = this.stages[stagePos].askItem(info);
-        if (askedInfo == null) askedInfo = "Info inexistente";
+    public StageItem askItem(String info){
+        StageItem askedInfo = this.stages[stagePos].askItem(info);
         nextStep();
         return askedInfo;
     }
