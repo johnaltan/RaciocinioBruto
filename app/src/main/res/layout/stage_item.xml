@@ -9,6 +9,7 @@
     app:cardCornerRadius="5dp">
 
     <LinearLayout
+        android:id="@+id/linear_layout_stage_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -27,7 +28,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/txt_stage_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
             android:clickable="false"
             android:text="@string/stage_item"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp" />-->
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
