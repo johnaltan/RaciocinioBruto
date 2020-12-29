@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.LinearLayout;
-import android.widget.ImageView;
+
+import com.github.chrisbanes.photoview.PhotoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,13 +51,13 @@ public class StageItemAdapter extends RecyclerView.Adapter<StageItemAdapter.Stag
 
         TextView txtTitle;
         TextView txtContent;
-        ImageView imgContent;
+        PhotoView imgContent;
 
         public StageItemViewHolder(@NonNull View itemView) {
             super(itemView);
             this.txtTitle = (TextView) itemView.findViewById(R.id.txt_title_stage_item);
             this.txtContent = (TextView) itemView.findViewById(R.id.txt_stage_item);
-            this.imgContent = (ImageView) itemView.findViewById(R.id.img_stage_item);
+            this.imgContent = (PhotoView) itemView.findViewById(R.id.img_stage_item);
 
 
         }

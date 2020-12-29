@@ -43,7 +43,7 @@
             android:textSize="16sp"
             android:visibility="visible"/>
 
-      <ImageView
+       <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/img_stage_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
