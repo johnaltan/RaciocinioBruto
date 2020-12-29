@@ -49,15 +49,16 @@ public class StageItemAdapter extends RecyclerView.Adapter<StageItemAdapter.Stag
     class StageItemViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtTitle;
-        LinearLayout linearLayout;
-        Context context;
+        TextView txtContent;
+        ImageView imgContent;
 
         public StageItemViewHolder(@NonNull View itemView) {
             super(itemView);
             //this.txtContent = (TextView) itemView.findViewById(R.id.txt_stage_item);
             this.txtTitle = (TextView) itemView.findViewById(R.id.txt_title_stage_item);
-            this.linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_layout_stage_item);
-            this.context = itemView.getContext();
+            this.txtContent = (TextView) itemView.findViewById(R.id.txt_stage_item);
+            this.imgContent = (ImageView) itemView.findViewById(R.id.img_stage_item);
+
 
         }
 
@@ -66,27 +67,17 @@ public class StageItemAdapter extends RecyclerView.Adapter<StageItemAdapter.Stag
 
 
             if(stageItem.getName().equalsIgnoreCase("rosto")) {
-                ImageView imageContent = new ImageView(this.context);
 
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(2,2,2,2);
-                imageContent.setLayoutParams(layoutParams);
-                imageContent.setAdjustViewBounds(true);
-                linearLayout.addView(imageContent);
                 String baseRosto = stageItem.getValue();
                 byte[] decodedString = Base64.decode(baseRosto, Base64.DEFAULT);
                 Bitmap decodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                imgContent.setImageBitmap(decodeBitmap);
 
+                txtContent.setVisibility(View.GONE);
+                imgContent.setVisibility(View.VISIBLE);
 
-                imageContent.setImageBitmap(decodeBitmap);
             }
             else {
-                TextView txtContent = new TextView(this.context);
-                txtContent.setTextColor(Color.WHITE);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(2,2,2,2);
-                txtContent.setLayoutParams(layoutParams);
-                linearLayout.addView(txtContent);
                 txtContent.setText(stageItem.getValue());
             }
 
