@@ -9,8 +9,11 @@ public class StageItem {
     private String name;
     private String value;
     private String [] synonyms;
+    private boolean valueIsImage;
 
     public StageItem() {
+
+
     }
 
     public StageItem(String name, String value) {
@@ -23,6 +26,7 @@ public class StageItem {
         this.name = name;
         this.value = value;
         this.synonyms = synonyms;
+
     }
 
     public String getName() {
@@ -45,6 +49,14 @@ public class StageItem {
         if (synonyms != null)
             for(String s : synonyms) if (s.equalsIgnoreCase(possibleSynonym)) return true;
         return false;
+    }
+
+    public void setValueIsImage(boolean valueIsImage){
+        this.valueIsImage = valueIsImage;
+    }
+
+    public boolean getValueIsImage(){
+        return this.valueIsImage;
     }
 
     @Override

@@ -54,7 +54,6 @@ public class StageItemAdapter extends RecyclerView.Adapter<StageItemAdapter.Stag
 
         public StageItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            //this.txtContent = (TextView) itemView.findViewById(R.id.txt_stage_item);
             this.txtTitle = (TextView) itemView.findViewById(R.id.txt_title_stage_item);
             this.txtContent = (TextView) itemView.findViewById(R.id.txt_stage_item);
             this.imgContent = (ImageView) itemView.findViewById(R.id.img_stage_item);
@@ -66,16 +65,15 @@ public class StageItemAdapter extends RecyclerView.Adapter<StageItemAdapter.Stag
             txtTitle.setText(stageItem.getName());
 
 
-            if(stageItem.getName().equalsIgnoreCase("rosto")) {
+            if(stageItem.getValueIsImage()) {
 
-                String baseRosto = stageItem.getValue();
-                byte[] decodedString = Base64.decode(baseRosto, Base64.DEFAULT);
+                String baseImage = stageItem.getValue();
+                byte[] decodedString = Base64.decode(baseImage, Base64.DEFAULT);
                 Bitmap decodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 imgContent.setImageBitmap(decodeBitmap);
 
                 txtContent.setVisibility(View.GONE);
                 imgContent.setVisibility(View.VISIBLE);
-
             }
             else {
                 txtContent.setText(stageItem.getValue());
