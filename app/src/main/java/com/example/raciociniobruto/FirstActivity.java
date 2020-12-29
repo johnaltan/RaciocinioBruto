@@ -9,10 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.app.ProgressDialog;
+
+import android.os.AsyncTask;
+
 import java.util.ArrayList;
 
 public class FirstActivity extends AppCompatActivity {
     private static final int PICK_JSON_FILE = 2;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +27,12 @@ public class FirstActivity extends AppCompatActivity {
 
     }
 
-    public void buttonAction(View view){
+    public void buttonSearchCasesAction(View view){
         openFile();
+    }
+
+    public void buttonDownloadCasesAction (View view){
+        downloadCases();
     }
 
     private void openFile() {
@@ -34,6 +43,10 @@ public class FirstActivity extends AppCompatActivity {
 
 
         startActivityForResult(intent, PICK_JSON_FILE);
+    }
+
+    private void downloadCases(){
+        new DownloaderTask().execute();
     }
 
     @Override
@@ -49,4 +62,41 @@ public class FirstActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    protected class DownloaderTask extends AsyncTask <Void, String, ArrayList<ClinicalCase>>{
+
+        @Override
+        protected ArrayList<ClinicalCase> doInBackground (Void... params){
+            ClinicalCaseWebTransfer transfer = new ClinicalCaseWebTransfer();
+            return transfer.loadCases(null);
+
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+
+            pd = new ProgressDialog(FirstActivity.this);
+            pd.setMessage("Baixando casos, aguarde...");
+            pd.setCancelable(false);
+            pd.show();
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<ClinicalCase> result){
+            super.onPostExecute(result);
+
+            if (pd.isShowing()){
+                pd.dismiss();
+            }
+            if(result != null) {
+                MainActivity.setScene(new Scene(result.get(0)));
+                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        }
+
+    }
+
 }
