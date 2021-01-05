@@ -47,7 +47,7 @@ public class StageItem {
 
     public boolean isSynonym (String possibleSynonym){
         if (synonyms != null)
-            for(String s : synonyms) if (s.equalsIgnoreCase(possibleSynonym)) return true;
+            for(String s : synonyms) if (StringTreater.adjustSpelling(s).equalsIgnoreCase(possibleSynonym)) return true;
         return false;
     }
 
