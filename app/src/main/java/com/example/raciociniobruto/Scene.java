@@ -7,15 +7,17 @@ public class Scene {
     private Stage stages[];
     private int step;
     private int stagePos;
+    private int globalAvailableItemsAmount;
 
     public Scene (ClinicalCase clinicalCase){
         this.clinicalCase = clinicalCase;
-        this.stages = new Stage[4];
+        this.stages = new Stage[3];
         this.stages[0] = new Stage("Anamnese",clinicalCase.getAnamnesis());
         this.stages[1] = new Stage ("Exame físico",clinicalCase.getPhysicalExam());
         this.stages[2] = new Stage ("Exames complementares",clinicalCase.getComplementaryExam());
         this.step = 0;
         this.stagePos = 0;
+        this.calculateGlobalAvailableItemsAmount();
     }
 
     public void nextStep(){
@@ -67,4 +69,12 @@ public class Scene {
 
     public void setStagePos(int stagePos) {this.stagePos = stagePos;}
 
+    public void calculateGlobalAvailableItemsAmount(){
+        this.globalAvailableItemsAmount = 0;
+        for(int i = 0; i < this.stages.length;i++) this.globalAvailableItemsAmount += this.stages[i].informAvailableItemsAmount();
+    }
+
+    public int getGlobalAvailableItemsAmount() {
+        return globalAvailableItemsAmount;
+    }
 }

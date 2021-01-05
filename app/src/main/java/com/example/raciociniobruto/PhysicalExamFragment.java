@@ -83,7 +83,7 @@ public class PhysicalExamFragment extends Fragment {
         txtSummary = (TextView) view.findViewById(R.id.txt_physicalExam_summary);
         txtScore = (TextView) view.findViewById(R.id.txt_physicalExam_score);
         txtSummary.setText("Resumo: " + MainActivity.getStageSummary());
-        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()));
+        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()) + "\nDisponível: " + String.valueOf(MainActivity.getGlobalAvailableItemsAmount()));
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.recycler_view_physicalExam);
 
         stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());

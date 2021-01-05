@@ -83,7 +83,7 @@ public class ComplementaryExamsFragment extends Fragment {
         txtSummary = (TextView) view.findViewById(R.id.txt_complementaryExams_summary);
         txtScore = (TextView) view.findViewById(R.id.txt_complementaryExams_score);
         txtSummary.setText("Resumo: " + MainActivity.getStageSummary());
-        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()));
+        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()) + "\nDisponível: " + String.valueOf(MainActivity.getGlobalAvailableItemsAmount()));
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.recycler_view_complementaryExams);
 
         stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());

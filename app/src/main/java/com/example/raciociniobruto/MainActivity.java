@@ -105,4 +105,6 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<StageItem> getNotFoundItems(){
         return scene.getNotFoundItems();
     }
+
+    public static int getGlobalAvailableItemsAmount() {return scene.getGlobalAvailableItemsAmount();}
 }

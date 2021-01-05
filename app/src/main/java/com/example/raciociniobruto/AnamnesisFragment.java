@@ -41,7 +41,7 @@ public class AnamnesisFragment extends Fragment {
         txtSummary = (TextView) view.findViewById(R.id.txt_anamnesis_summary);
         txtScore = (TextView) view.findViewById(R.id.txt_anamnesis_score);
         txtSummary.setText("Resumo: " + MainActivity.getStageSummary());
-        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()));
+        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()) + "\nDisponível: " + String.valueOf(MainActivity.getGlobalAvailableItemsAmount()));
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.recycler_view_anamnesis);
 
         stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());

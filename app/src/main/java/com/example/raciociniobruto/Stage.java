@@ -102,5 +102,9 @@ public class Stage {
         return this.stageBean.getSummary();
     }
 
+    public int informAvailableItemsAmount(){
+        return this.stageBean.getAvailableItems().size();
+    }
+
 
 }
