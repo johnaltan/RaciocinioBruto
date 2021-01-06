@@ -38,10 +38,10 @@ public class Stage {
 
     public StageItem askItem(String itemName){
         StageItem item = null;
-        itemName = StringTreater.adjustSpelling(itemName);
+        String inquiryName = StringTreater.adjustSpelling(itemName);
         for (int x = 0;x < stageBean.getAvailableItems().size(); x++) {
             StageItem i = stageBean.getAvailableItems().get(x);
-            if (StringTreater.adjustSpelling(i.getName()).equalsIgnoreCase(itemName) || i.isSynonym(itemName)) {
+            if (StringTreater.adjustSpelling(i.getName()).equalsIgnoreCase(inquiryName) || i.isSynonym(inquiryName)) {
                 item = stageBean.getAvailableItems().get(x);
                 askedFoundItemsIndexes.add(x); //save index founded
                 break;
