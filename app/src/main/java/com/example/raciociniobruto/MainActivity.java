@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity  {
         return scene.getStep();
     }
 
-    public static StageItem askItem(String info) {
+    public static ArrayList<StageItem> askItem(String info) {
         return scene.askItem(info);
     }
 
@@ -209,6 +209,10 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public static int getGlobalAvailableItemsAmount() {return scene.getGlobalAvailableItemsAmount();}
+
+    public static void saveTempFoundItemsIndexes(ArrayList<Integer> indexesToSave){
+        scene.saveTempFoundItemsIndexes(indexesToSave);
+    }
 
     class MyGestureDetector extends SimpleOnGestureListener {
         @Override

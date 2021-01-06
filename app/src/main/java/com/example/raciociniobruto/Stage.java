@@ -5,11 +5,14 @@ import java.util.ArrayList;
 public class Stage {
     private String name;
     private ArrayList<Integer> askedFoundItemsIndexes;
+    private ArrayList<Integer> tempAskedFoundItemsIndexes;
     private ArrayList<String> notFoundItemsNames;
+
     private StageBean stageBean;
 
     public Stage() {
         this.askedFoundItemsIndexes = new ArrayList<Integer>();
+        this.tempAskedFoundItemsIndexes = new ArrayList<Integer>();
         this.notFoundItemsNames = new ArrayList<String>();
         stageBean = new StageBean();
     }
@@ -18,6 +21,7 @@ public class Stage {
         this.name = name;
         this.stageBean = stageBean;
         this.askedFoundItemsIndexes = new ArrayList<Integer>();
+        this.tempAskedFoundItemsIndexes = new ArrayList<Integer>();
         this.notFoundItemsNames = new ArrayList<String>();
     }
 
@@ -36,18 +40,31 @@ public class Stage {
         return this.name;
     }
 
-    public StageItem askItem(String inquiryName){
-        StageItem item = null;
+    public ArrayList<StageItem> askItem(String inquiryName){
+        this.tempAskedFoundItemsIndexes.clear();
+        ArrayList<StageItem> items = new ArrayList<StageItem>();
 
         for (int x = 0;x < stageBean.getAvailableItems().size(); x++) {
             StageItem i = stageBean.getAvailableItems().get(x);
             if (i.existFromInquiryName(inquiryName)) {
-                item = stageBean.getAvailableItems().get(x);
-                askedFoundItemsIndexes.add(x); //save index founded
+                items.add(this.stageBean.getAvailableItems().get(x));
+                this.tempAskedFoundItemsIndexes.add(x);
             }
         }
-        if (item == null) notFoundItemsNames.add(inquiryName);
-        return item;
+        if(this.tempAskedFoundItemsIndexes.size() == 1) this.saveTempFoundItemsIndexes(null);
+        if (items.size() == 0) notFoundItemsNames.add(inquiryName);
+        return items;
+    }
+
+    public void saveTempFoundItemsIndexes(ArrayList<Integer> indexesToSave){ //these indexes are of temporary list, not of available list
+
+        if (indexesToSave == null) {
+            for(int i : this.tempAskedFoundItemsIndexes) this.askedFoundItemsIndexes.add(i); //if indexesToSave == null save all
+        }else {
+            for (int c : indexesToSave)
+                this.askedFoundItemsIndexes.add(tempAskedFoundItemsIndexes.get(c));
+        }
+        this.tempAskedFoundItemsIndexes.clear();
     }
 
     public String findAskedItemValue (String itemName){

@@ -7,11 +7,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import android.app.AlertDialog.Builder;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import java.util.ArrayList;
 
@@ -71,10 +77,40 @@ public class InfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String i = editTextOption.getText().toString();
 
+
+
                // infoAdded.add(i);
-                StageItem item = MainActivity.askItem(i);
-                if(item == null) Toast.makeText(view.getContext(),"Info não encontrada.", Toast.LENGTH_LONG).show();
-                else Toast.makeText(view.getContext(),"Info encontrada e registrada como: " + item.getName() + ".", Toast.LENGTH_LONG).show();
+                ArrayList<StageItem> items = MainActivity.askItem(i);
+                int itemsSize = items.size();
+                switch (itemsSize){
+                    case 0:
+                        Toast.makeText(view.getContext(),"Info não encontrada.", Toast.LENGTH_LONG).show();
+                        break;
+                    case 1:
+                        Toast.makeText(view.getContext(),"Info encontrada e registrada como: " + items.get(0).getName() + ".", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        CharSequence[] nameItems = new CharSequence[items.size()];
+                        for (int c = 0; c < nameItems.length; c++) nameItems[c] = items.get(c).getName();
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(InfoActivity.this);
+                        builder.setTitle("Há " + String.valueOf(itemsSize) + " itens. Escolha um:")
+                                .setItems(nameItems, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // The 'which' argument contains the index position
+                                        // of the selected item
+
+                                        ArrayList<Integer> indexesToSave = new ArrayList<Integer>();
+                                        indexesToSave.add(which);
+                                        MainActivity.saveTempFoundItemsIndexes(indexesToSave);
+                                    }
+                                });
+                        // Create the AlertDialog
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        break;
+                }
+
                 stringTxtContent += i + "\n";
                 txtContent.setText(stringTxtContent);
 

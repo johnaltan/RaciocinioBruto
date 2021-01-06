@@ -20,8 +20,8 @@ public class Scene {
         this.calculateGlobalAvailableItemsAmount();
     }
 
-    public void nextStep(){
-        this.step++;
+    public void advanceSteps(int steps){
+        this.step += steps;
     }
 
     public void nextStage() {
@@ -37,10 +37,15 @@ public class Scene {
         return this.step;
     }
 
-    public StageItem askItem(String info){
-        StageItem askedInfo = this.stages[stagePos].askItem(info);
-        nextStep();
-        return askedInfo;
+    public ArrayList<StageItem> askItem(String info){
+        ArrayList<StageItem> askedInfos = this.stages[stagePos].askItem(info);
+        if (askedInfos.size() <= 1) advanceSteps(1);
+        return askedInfos;
+    }
+
+    public void saveTempFoundItemsIndexes(ArrayList<Integer> indexesToSave){
+        this.stages[stagePos].saveTempFoundItemsIndexes(indexesToSave);
+        advanceSteps(indexesToSave.size());
     }
 
     public String findAskedItemValue (String itemName){
