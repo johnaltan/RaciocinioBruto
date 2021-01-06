@@ -77,6 +77,14 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        findViewById(R.id.button_stage_previous).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.previousStage();
+                updateViews();
+            }
+        });
+
         findViewById(R.id.button_stage_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

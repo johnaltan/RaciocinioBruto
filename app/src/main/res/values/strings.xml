@@ -13,7 +13,8 @@
     <string name="button_dx">Button</string>
     <string name="info">INFO</string>
     <string name="diagnosticar">Diagnosticar</string>
-    <string name="Prox">PROX</string>
+    <string name="Prox">&#62;</string>
+    <string name="Previous">&#60;</string>
     <string name="ok">OK</string>
     <string name="title">Title</string>
     <string name="content">Content</string>
