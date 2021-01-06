@@ -1,10 +1,5 @@
 package com.example.raciociniobruto;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 public class StageItem {
     private String name;
     private String value;
@@ -45,11 +40,24 @@ public class StageItem {
         this.value = value;
     }
 
-    public boolean isSynonym (String possibleSynonym){
-        if (synonyms != null)
-            for(String s : synonyms) if (StringTreater.adjustSpelling(s).equalsIgnoreCase(possibleSynonym)) return true;
+
+    public boolean existFromInquiryName(String inquiryName){
+        String adjustedInquiryName = StringTreater.adjustSpelling(inquiryName);
+        String adjustedItemName = StringTreater.adjustSpelling(this.name);
+
+        if(adjustedItemName.equalsIgnoreCase(adjustedInquiryName)) return true; //if item name matches with inquiry name
+
+        if (this.synonyms != null)
+            for(String s : this.synonyms) if (StringTreater.adjustSpelling(s).equalsIgnoreCase(adjustedInquiryName)) return true; //if a synonym matches with inquiry name
+
+        if(StringTreater.containsMinimumNecessary(adjustedInquiryName,adjustedItemName)) return true; //if at least 2 words on inquiry name matches with item name
+
+        if (this.synonyms != null)
+            for(String s : this.synonyms) if (StringTreater.containsMinimumNecessary(adjustedInquiryName,StringTreater.adjustSpelling(s))) return true; //if at least 2 words on inquiry name matches with an synonym
+
         return false;
     }
+
 
     public void setValueIsImage(boolean valueIsImage){
         this.valueIsImage = valueIsImage;

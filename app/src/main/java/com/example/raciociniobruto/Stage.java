@@ -36,27 +36,25 @@ public class Stage {
         return this.name;
     }
 
-    public StageItem askItem(String itemName){
+    public StageItem askItem(String inquiryName){
         StageItem item = null;
-        String inquiryName = StringTreater.adjustSpelling(itemName);
+
         for (int x = 0;x < stageBean.getAvailableItems().size(); x++) {
             StageItem i = stageBean.getAvailableItems().get(x);
-            if (StringTreater.adjustSpelling(i.getName()).equalsIgnoreCase(inquiryName) || i.isSynonym(inquiryName)) {
+            if (i.existFromInquiryName(inquiryName)) {
                 item = stageBean.getAvailableItems().get(x);
                 askedFoundItemsIndexes.add(x); //save index founded
-                break;
             }
         }
-        if (item == null) notFoundItemsNames.add(itemName);
+        if (item == null) notFoundItemsNames.add(inquiryName);
         return item;
     }
 
     public String findAskedItemValue (String itemName){
         String itemValue = null;
-        itemName = StringTreater.adjustSpelling(itemName);
         for (Integer i : askedFoundItemsIndexes){
             StageItem item = stageBean.getAvailableItems().get(i);
-            if (StringTreater.adjustSpelling(item.getName()).equalsIgnoreCase(itemName)) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
                 itemValue = item.getValue();
                 break;
             }
