@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RaciocinioBruto">
+        <activity android:name=".DiagnosticActivity"></activity>
         <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,14 +23,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RaciocinioBruto.NoActionBar">
-
-        </activity>
-        <activity
-            android:name=".InfoActivity">
-
-        </activity>
-
+            android:theme="@style/Theme.RaciocinioBruto.NoActionBar"></activity>
+        <activity android:name=".InfoActivity"></activity>
     </application>
 
 </manifest>

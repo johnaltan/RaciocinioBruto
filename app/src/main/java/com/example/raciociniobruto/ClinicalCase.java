@@ -1,12 +1,7 @@
 package com.example.raciociniobruto;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 public class ClinicalCase {
-    private Disease[] disease;
+    private Disease[] diseases;
 
 
     private StageBean anamnesis;
@@ -16,9 +11,9 @@ public class ClinicalCase {
     public ClinicalCase() {
     }
 
-    public ClinicalCase(StageBean anamnesis, Disease[] disease, StageBean physicalExam, StageBean complementaryExam) {
+    public ClinicalCase(StageBean anamnesis, Disease[] diseases, StageBean physicalExam, StageBean complementaryExam) {
         this.anamnesis = anamnesis;
-        this.disease = disease;
+        this.diseases = diseases;
         this.physicalExam = physicalExam;
         this.complementaryExam = complementaryExam;
     }
@@ -27,8 +22,8 @@ public class ClinicalCase {
         return anamnesis;
     }
 
-    public Disease[] getDisease() {
-        return disease;
+    public Disease[] getDiseases() {
+        return diseases;
     }
 
     public StageBean getPhysicalExam() {

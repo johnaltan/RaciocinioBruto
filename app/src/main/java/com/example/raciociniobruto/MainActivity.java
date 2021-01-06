@@ -93,6 +93,14 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        findViewById(R.id.button_stage_diagnostic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,DiagnosticActivity.class);
+                startActivity(intent);
+            }
+        });
+
         txtContent = (TextView) findViewById(R.id.txt_stage_content);
         txtSummary = (TextView) findViewById(R.id.txt_stage_summary);
         txtScore = (TextView) findViewById(R.id.txt_stage_score);
@@ -212,6 +220,14 @@ public class MainActivity extends AppCompatActivity  {
 
     public static void saveTempFoundItemsIndexes(ArrayList<Integer> indexesToSave){
         scene.saveTempFoundItemsIndexes(indexesToSave);
+    }
+
+    public static boolean tryToDiagnose(String inquiryDiseaseName){
+        return scene.tryToDiagnose(inquiryDiseaseName);
+    }
+
+    public static ArrayList<String> nameTriedHypothesis(){
+        return scene.getTriedHypothesis();
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {

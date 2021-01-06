@@ -26,17 +26,13 @@ public class InfoActivity extends AppCompatActivity {
     TextView txtTitle;
     EditText editTextOption;
     String stringTxtContent;
-    String stringAddedOptions;
-    String stringTxtTitle;
 
-    SharedViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_activity);
         stringTxtContent = new String();
-        stringAddedOptions = new String();
 
         txtContent = (TextView) findViewById(R.id.txt_content);
         txtTitle = (TextView) findViewById(R.id.txt_title);

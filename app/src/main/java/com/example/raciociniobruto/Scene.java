@@ -8,8 +8,10 @@ public class Scene {
     private int step;
     private int stagePos;
     private int globalAvailableItemsAmount;
+    private ArrayList<String> triedHypothesis;
 
     public Scene (ClinicalCase clinicalCase){
+        this.triedHypothesis = new ArrayList<String>();
         this.clinicalCase = clinicalCase;
         this.stages = new Stage[3];
         this.stages[0] = new Stage("Anamnese",clinicalCase.getAnamnesis());
@@ -18,6 +20,16 @@ public class Scene {
         this.step = 0;
         this.stagePos = 0;
         this.calculateGlobalAvailableItemsAmount();
+    }
+
+    public boolean tryToDiagnose(String inquiryHypothesis) {
+        for(Disease d : this.clinicalCase.getDiseases()) if(d.isCorrectDiagnosis(inquiryHypothesis)) return true;
+        triedHypothesis.add(inquiryHypothesis);
+        return false;
+    }
+
+    public ArrayList<String> getTriedHypothesis(){
+        return this.triedHypothesis;
     }
 
     public void advanceSteps(int steps){
