@@ -28,7 +28,6 @@ public class InfoActivity extends AppCompatActivity {
     String stringTxtContent;
     String stringAddedOptions;
     String stringTxtTitle;
-   // ArrayList<String> infoAdded;
 
     SharedViewModel viewModel;
 
@@ -38,15 +37,10 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.info_activity);
         stringTxtContent = new String();
         stringAddedOptions = new String();
-      //  infoAdded = new ArrayList<String>();
 
         txtContent = (TextView) findViewById(R.id.txt_content);
         txtTitle = (TextView) findViewById(R.id.txt_title);
         editTextOption = (EditText) findViewById(R.id.editTextOption);
-
-       // viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
-        //viewModel.getTitle().observe(getViewLifecycleOwner(),s -> { txtTitle.setText("Solicitar info: " + s);});
 
         txtTitle.setText("Solicitar info: " +MainActivity.getStageName());
         ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
@@ -65,9 +59,6 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-            //    viewModel.setInfoAdded(infoAdded);
-
              finish();
             }
         });
@@ -77,9 +68,6 @@ public class InfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String i = editTextOption.getText().toString();
 
-
-
-               // infoAdded.add(i);
                 ArrayList<StageItem> items = MainActivity.askItem(i);
                 int itemsSize = items.size();
                 switch (itemsSize){
@@ -103,6 +91,7 @@ public class InfoActivity extends AppCompatActivity {
                                         ArrayList<Integer> indexesToSave = new ArrayList<Integer>();
                                         indexesToSave.add(which);
                                         MainActivity.saveTempFoundItemsIndexes(indexesToSave);
+                                        Toast.makeText(view.getContext(),"Info encontrada e registrada como: " + items.get(which).getName() + ".", Toast.LENGTH_LONG).show();
                                     }
                                 });
                         // Create the AlertDialog
@@ -116,8 +105,6 @@ public class InfoActivity extends AppCompatActivity {
 
                 editTextOption.setText("");
                 editTextOption.requestFocus();
-
-
             }
         });
 
