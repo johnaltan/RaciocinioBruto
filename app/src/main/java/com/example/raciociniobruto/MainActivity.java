@@ -101,10 +101,7 @@ public class MainActivity extends AppCompatActivity  {
         rv = (RecyclerView) findViewById(R.id.recycler_view_stage);
         rv.setOnTouchListener(gestureListener);
 
-
-
         updateViews();
-
     }
 
     @Override
@@ -125,21 +122,8 @@ public class MainActivity extends AppCompatActivity  {
 
         txtTitle.setText(MainActivity.getStageName());
         outputText = new String();
-        //outputText = MainActivity.getStageSummary();
 
-
-        //viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
-/*        viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
-            outputText += "\nSolicitados:\n\n";
-            for (String i : s) outputText += i + ": " + MainActivity.askInfo(i) + "\n";
-            outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
-            txtContent.setText(outputText);
-        });*/
-
-        //outputText += "\nSOLICITADOS:\nEncontrados:\n\n";
         ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
-        //for (String i : namesAsked) outputText += i + ": " + MainActivity.findAskedItemValue(i)+"\n";
         if (MainActivity.nameNotFoundItems().size() > 0){
             outputText += "\nInexistentes: ";
             namesAsked = MainActivity.nameNotFoundItems();
@@ -150,7 +134,6 @@ public class MainActivity extends AppCompatActivity  {
         txtContent.setText(outputText);
 
         stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());
-
         rv.setAdapter(stageItemAdapter);
     }
 
@@ -235,10 +218,9 @@ public class MainActivity extends AppCompatActivity  {
                     return false;
                 // right to left swipe
                 if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                   MainActivity.nextStage();
-                   updateViews();
+                    MainActivity.nextStage();
+                    updateViews();
                 } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Log.d("GESTO", "Right Swipe");
                     MainActivity.previousStage();
                     updateViews();
                 }
