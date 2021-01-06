@@ -28,6 +28,10 @@ public class Scene {
         this.stagePos++;
         if (stagePos >= stages.length) stagePos = 0;
     }
+    public void previousStage() {
+        this.stagePos--;
+        if (stagePos < 0) stagePos = stages.length - 1;
+    }
 
     public int getStep(){
         return this.step;

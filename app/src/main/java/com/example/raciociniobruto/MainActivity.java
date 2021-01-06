@@ -12,9 +12,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.GestureDetector;
+
+import android.view.MotionEvent;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.GestureDetector;
+
+import androidx.core.view.MotionEventCompat;
+
+
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     private static final int PICK_INFO = 3;
     TextView txtContent;
     TextView txtTitle;
@@ -27,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private static Scene scene;
 
     private ArrayList<ClinicalCase> clinicalCases;
+
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +62,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        gestureDetector = new GestureDetector(this, new MyGestureDetector());
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
         findViewById(R.id.button_stage_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity.nextStage();
                 updateViews();
-
             }
         });
 
@@ -69,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         txtTitle = (TextView) findViewById(R.id.txt_stage_title);
 
         rv = (RecyclerView) findViewById(R.id.recycler_view_stage);
+        rv.setOnTouchListener(gestureListener);
 
 
 
@@ -84,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
             updateViews();
         }
     }
+
+
 
     private void updateViews(){
 
@@ -145,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public static int getStep() {
         return scene.getStep();
     }
@@ -174,7 +198,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setStagePos(int stagePos) {scene.setStagePos(stagePos);}
 
-    public static void nextStage() {scene.nextStage();}
+    public static void nextStage() {
+        scene.nextStage();
+    }
+    public static void previousStage() {
+        scene.previousStage();
+    }
 
     public static void setScene (Scene scene){
         MainActivity.scene = scene;
@@ -189,4 +218,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static int getGlobalAvailableItemsAmount() {return scene.getGlobalAvailableItemsAmount();}
+
+    class MyGestureDetector extends SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                // right to left swipe
+                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                   MainActivity.nextStage();
+                   updateViews();
+                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    Log.d("GESTO", "Right Swipe");
+                    MainActivity.previousStage();
+                    updateViews();
+                }
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+    }
 }
