@@ -25,6 +25,10 @@
             android:theme="@style/Theme.RaciocinioBruto.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".InfoActivity">
+
+        </activity>
 
     </application>
 

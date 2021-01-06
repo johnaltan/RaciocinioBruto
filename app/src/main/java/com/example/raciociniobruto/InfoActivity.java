@@ -9,12 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 
-public class InfoFragment extends Fragment {
+public class InfoActivity extends AppCompatActivity {
     TextView txtContent;
     TextView txtTitle;
     EditText editTextOption;
@@ -26,23 +27,16 @@ public class InfoFragment extends Fragment {
     SharedViewModel viewModel;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.info_fragment, container, false);
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.info_activity);
         stringTxtContent = new String();
         stringAddedOptions = new String();
       //  infoAdded = new ArrayList<String>();
 
-        txtContent = (TextView) view.findViewById(R.id.txt_content);
-        txtTitle = (TextView) view.findViewById(R.id.txt_title);
-        editTextOption = (EditText) view.findViewById(R.id.editTextOption);
+        txtContent = (TextView) findViewById(R.id.txt_content);
+        txtTitle = (TextView) findViewById(R.id.txt_title);
+        editTextOption = (EditText) findViewById(R.id.editTextOption);
 
        // viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -61,19 +55,18 @@ public class InfoFragment extends Fragment {
         stringTxtContent += "\n\nRecém registradas:\n";
         txtContent.setText(stringTxtContent);
 
-        view.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
             //    viewModel.setInfoAdded(infoAdded);
 
-                NavHostFragment.findNavController(InfoFragment.this)
-                        .navigateUp();
+             finish();
             }
         });
 
-        view.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String i = editTextOption.getText().toString();

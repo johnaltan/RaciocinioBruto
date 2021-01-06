@@ -2,7 +2,7 @@
     <string name="app_name">RaciocinioBruto</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="anamnesis_fragment_label">Anamnesis Fragment</string>
+    <string name="stage_fragment_label">Stage Fragment</string>
     <string name="info_fragment_label">Info Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -20,12 +20,10 @@
     <string name="button">Button</string>
     <string name="add">ADD</string>
     <string name="newInfo">Informação</string>
-    <string name="txtTitle"> Anamnese </string>
-    <string name="anamnesis_content">Anamnesis content</string>
+    <string name="txtTitle"> Stage Title </string>
+    <string name="stage_content">Stage content</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="physicalExam_content">Physical Exam content</string>
-    <string name="complementaryExams_content">Complementary Exams Content</string>
     <string name="button_seach_case">Escolher casos</string>
     <string name="button_download_case">Baixar casos</string>
     <string name="stage_item">Stage Item</string>

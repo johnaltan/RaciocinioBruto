@@ -2,16 +2,28 @@ package com.example.raciociniobruto;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int PICK_INFO = 3;
+    TextView txtContent;
+    TextView txtTitle;
+    TextView txtSummary;
+    TextView txtScore;
+    String outputText;
+    RecyclerView rv;
+    private StageItemAdapter stageItemAdapter;
+
     private static Scene scene;
 
     private ArrayList<ClinicalCase> clinicalCases;
@@ -34,12 +46,80 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        findViewById(R.id.button_stage_next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.nextStage();
+                updateViews();
+
+            }
+        });
+
+        findViewById(R.id.button_stage_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,InfoActivity.class);
+                startActivityForResult(intent,PICK_INFO);
+            }
+        });
+
+        txtContent = (TextView) findViewById(R.id.txt_stage_content);
+        txtSummary = (TextView) findViewById(R.id.txt_stage_summary);
+        txtScore = (TextView) findViewById(R.id.txt_stage_score);
+        txtTitle = (TextView) findViewById(R.id.txt_stage_title);
+
+        rv = (RecyclerView) findViewById(R.id.recycler_view_stage);
+
+
+
+        updateViews();
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == this.PICK_INFO) {
+
+            updateViews();
+        }
+    }
+
+    private void updateViews(){
+
+        txtSummary.setText("Resumo: " + MainActivity.getStageSummary());
+        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()) + "\nDisponível: " + String.valueOf(MainActivity.getGlobalAvailableItemsAmount()));
+
+        txtTitle.setText(MainActivity.getStageName());
+        outputText = new String();
+        //outputText = MainActivity.getStageSummary();
 
 
+        //viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
+/*        viewModel.getInfoAdded().observe(getViewLifecycleOwner(),s -> {
+            outputText += "\nSolicitados:\n\n";
+            for (String i : s) outputText += i + ": " + MainActivity.askInfo(i) + "\n";
+            outputText += "\nPassos dados: " + String.valueOf(MainActivity.getStep());
+            txtContent.setText(outputText);
+        });*/
+
+        //outputText += "\nSOLICITADOS:\nEncontrados:\n\n";
+        ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
+        //for (String i : namesAsked) outputText += i + ": " + MainActivity.findAskedItemValue(i)+"\n";
+        if (MainActivity.nameNotFoundItems().size() > 0){
+            outputText += "\nInexistentes: ";
+            namesAsked = MainActivity.nameNotFoundItems();
+            for (String i : namesAsked) outputText += i+", ";
+        }
+        if(outputText.contains(",")) outputText = outputText.substring(0,outputText.lastIndexOf(",")) + ".";
+
+        txtContent.setText(outputText);
+
+        stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());
+
+        rv.setAdapter(stageItemAdapter);
+    }
 
     private ClinicalCase TESTgenerateClinicalCase (){
         StageBean anamnesis = new StageBean();
@@ -93,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setStagePos(int stagePos) {scene.setStagePos(stagePos);}
+
+    public static void nextStage() {scene.nextStage();}
 
     public static void setScene (Scene scene){
         MainActivity.scene = scene;
