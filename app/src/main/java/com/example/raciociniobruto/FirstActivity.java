@@ -1,7 +1,6 @@
 package com.example.raciociniobruto;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +12,13 @@ import android.app.ProgressDialog;
 
 import android.os.AsyncTask;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FirstActivity extends AppCompatActivity {
     private static final int PICK_JSON_FILE = 2;
@@ -27,11 +32,11 @@ public class FirstActivity extends AppCompatActivity {
 
     }
 
-    public void buttonSearchCasesAction(View view){
+    public void buttonSearchCasesAction(View view) {
         openFile();
     }
 
-    public void buttonDownloadCasesAction (View view){
+    public void buttonDownloadCasesAction(View view) {
         downloadCases();
     }
 
@@ -41,27 +46,45 @@ public class FirstActivity extends AppCompatActivity {
         intent.setType("application/json");
 
 
-
         startActivityForResult(intent, PICK_JSON_FILE);
     }
 
-    private void downloadCases(){
+    private void downloadCases() {
         new DownloaderTask().execute();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("ONACTIVITYRESULT","Voltou");
+        Log.d("ONACTIVITYRESULT", "Voltou");
         if (resultCode == Activity.RESULT_OK && requestCode == this.PICK_JSON_FILE) {
-            Log.d("ONACTIVITYRESULT","Respondeu: " + data.getData());
+            Log.d("ONACTIVITYRESULT", "Respondeu: " + data.getData());
             ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer(this);
             ArrayList<ClinicalCase> clinicalCases = transfer.loadCases(data.getData());
             MainActivity.setScene(new Scene(clinicalCases.get(0)));
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }
+
+    private void postClinicalCaseFirebase(String clinicalCaseJSON) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("casosClinicos").
+                add(clinicalCaseJSON)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.w("TAG", "Error adding document", e);
+                    }
+                });
+    }
+
 
     protected class DownloaderTask extends AsyncTask <Void, String, ArrayList<ClinicalCase>>{
 

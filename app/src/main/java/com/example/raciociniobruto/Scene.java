@@ -101,4 +101,12 @@ public class Scene {
     public int getGlobalAvailableItemsAmount() {
         return globalAvailableItemsAmount;
     }
+
+    public Stage[] getStages() {
+        return stages;
+    }
+
+    public void setStages(Stage[] stages) {
+        this.stages = stages;
+    }
 }

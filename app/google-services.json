@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "819196379439",
+    "project_id": "raciociniobruto-e2279",
+    "storage_bucket": "raciociniobruto-e2279.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819196379439:android:8fcbdff72dea6f669961da",
+        "android_client_info": {
+          "package_name": "com.example.raciociniobruto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819196379439-4nimmumgjml3me5crp16ash9kgbg4edp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVF3wUw2gTwdhadAeUMNX-zO51YKX6TaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819196379439-4nimmumgjml3me5crp16ash9kgbg4edp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

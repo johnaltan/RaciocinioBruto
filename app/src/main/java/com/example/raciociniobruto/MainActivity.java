@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import java.util.HashMap;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,12 @@ import android.view.GestureDetector;
 
 import androidx.core.view.MotionEventCompat;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+
+
 
 
 import java.util.ArrayList;
@@ -33,6 +40,7 @@ public class MainActivity extends AppCompatActivity  {
     String outputText;
     RecyclerView rv;
     private StageItemAdapter stageItemAdapter;
+    private boolean probablyLeaving;
 
     private static Scene scene;
 
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        probablyLeaving = true;
 
         if(savedInstanceState == null) {
 
@@ -88,6 +97,7 @@ public class MainActivity extends AppCompatActivity  {
         findViewById(R.id.button_stage_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                probablyLeaving = false;
                 Intent intent = new Intent(MainActivity.this,InfoActivity.class);
                 startActivityForResult(intent,PICK_INFO);
             }
@@ -96,6 +106,7 @@ public class MainActivity extends AppCompatActivity  {
         findViewById(R.id.button_stage_diagnostic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                probablyLeaving = false;
                 Intent intent = new Intent(MainActivity.this,DiagnosticActivity.class);
                 startActivity(intent);
             }
@@ -118,6 +129,35 @@ public class MainActivity extends AppCompatActivity  {
         if (requestCode == this.PICK_INFO) {
 
             updateViews();
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        probablyLeaving = true;
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(probablyLeaving) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            HashMap<String,String> report = Reporter.reportNotFoundItems(scene);
+            db.collection("relatórios").
+                    add(report).
+                    addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            Log.w("TAG", "Error adding document", e);
+                        }
+                    });
         }
     }
 
