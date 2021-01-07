@@ -67,10 +67,11 @@ public class FirstActivity extends AppCompatActivity {
         }
     }
 
-    private void postClinicalCaseFirebase(String clinicalCaseJSON) {
+    private void postClinicalCaseFirebase(ClinicalCase clinicalCase) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Log.d("TAG", "Bora salvar");
         db.collection("casosClinicos").
-                add(clinicalCaseJSON)
+                add(clinicalCase)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

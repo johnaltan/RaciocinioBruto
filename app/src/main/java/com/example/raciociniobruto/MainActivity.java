@@ -194,16 +194,16 @@ public class MainActivity extends AppCompatActivity  {
         anamnesis.addAvailableItem(new StageItem("QP", "Dor de cabeça"));
         anamnesis.addAvailableItem(new StageItem("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"));
         anamnesis.addAvailableItem(new StageItem("ISDAS", "SP"));
-        anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades",new String[]{"comorbidades","doenças prévias","medicações em uso","MUC"}));
+   //     anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades",new List{"comorbidades","doenças prévias","medicações em uso","MUC"}));
         anamnesis.addAvailableItem(new StageItem("HMF", "Nega doenças na família"));
         anamnesis.addAvailableItem(new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
 
 
         StageBean physicalExam = new StageBean();
-        physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
+    //    physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
 
         StageBean complementaryExams = new StageBean();
-        complementaryExams.addAvailableItem(new StageItem("RX de tórax","Sem alterações, correlacionar com a clínica",new String[]{"raio x de torax","radiografia de torax"}));
+   //     complementaryExams.addAvailableItem(new StageItem("RX de tórax","Sem alterações, correlacionar com a clínica",new String[]{"raio x de torax","radiografia de torax"}));
 
         return new ClinicalCase(anamnesis, null, physicalExam, complementaryExams);
 

@@ -1,9 +1,11 @@
 package com.example.raciociniobruto;
 
+import java.util.List;
+
 public class StageItem {
     private String name;
     private String value;
-    private String [] synonyms;
+    private List<String> synonyms;
     private boolean valueIsImage;
 
     public StageItem() {
@@ -17,7 +19,7 @@ public class StageItem {
         this.synonyms = null;
     }
 
-    public StageItem(String name, String value, String [] synonyms) {
+    public StageItem(String name, String value, List<String> synonyms) {
         this.name = name;
         this.value = value;
         this.synonyms = synonyms;

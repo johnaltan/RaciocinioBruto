@@ -1,8 +1,10 @@
 package com.example.raciociniobruto;
 
+import java.util.List;
+
 public class Disease {
     private String name;
-    private String [] synonyms;
+    private List<String> synonyms;
 
     public String getName() {
         return name;
@@ -12,11 +14,11 @@ public class Disease {
         this.name = name;
     }
 
-    public String[] getSynonyms() {
+    public List<String> getSynonyms() {
         return synonyms;
     }
 
-    public void setSynonyms(String[] synonyms) {
+    public void setSynonyms(List<String> synonyms) {
         this.synonyms = synonyms;
     }
 
