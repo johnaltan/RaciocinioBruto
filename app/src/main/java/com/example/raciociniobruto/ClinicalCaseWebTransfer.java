@@ -34,14 +34,14 @@ public class ClinicalCaseWebTransfer implements ClinicalCaseTransfer {
 
     }
 
-    protected class DownloaderTask extends AsyncTask<OnLoadClinicalCasesListener, String, Long> {
-
+    protected class DownloaderTask extends AsyncTask<OnLoadClinicalCasesListener, String, OnLoadClinicalCasesListener> {
+        ArrayList<ClinicalCase> loadedClinicalCases;
         @Override
-        protected Long doInBackground (OnLoadClinicalCasesListener... params){
+        protected OnLoadClinicalCasesListener doInBackground (OnLoadClinicalCasesListener... params){
             String str="https://drive.google.com/uc?export=download&id=15Uv_hpsOafUHkDTHiMLzCxdUMZub9bad";
             URLConnection urlConn = null;
             BufferedReader bufferedReader = null;
-            ArrayList<ClinicalCase> loadedClinicalCases = null;
+            loadedClinicalCases = null;
             try
             {
                 URL url = new URL(str);
@@ -57,7 +57,6 @@ public class ClinicalCaseWebTransfer implements ClinicalCaseTransfer {
                 Gson gson = new Gson();
                 Log.d("Download",stringBuffer.toString());
                 loadedClinicalCases = gson.fromJson(stringBuffer.toString(), new TypeToken<ArrayList<ClinicalCase>>(){}.getType());
-                params[0].onLoadedClinicalCases(loadedClinicalCases);
             }
             catch(Exception ex)
             {
@@ -75,8 +74,12 @@ public class ClinicalCaseWebTransfer implements ClinicalCaseTransfer {
                     }
                 }
             }
-            return new Long(-1);
+            return params[0];
 
+        }
+
+        protected void onPostExecute(OnLoadClinicalCasesListener transferListener) {
+            transferListener.onLoadedClinicalCases(this.loadedClinicalCases);
         }
     }
 

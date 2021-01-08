@@ -3,6 +3,8 @@ package com.example.raciociniobruto;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.app.ProgressDialog;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,28 +60,34 @@ public class FirstActivity extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
 
-     /*   new ClinicalCaseWebTransfer().loadCases(null,new OnLoadClinicalCasesListener(){
+        OnLoadClinicalCasesListener loadListener = new OnLoadClinicalCasesListener() {
             @Override
             public void onLoadedClinicalCases(ArrayList<ClinicalCase> clinicalCases) {
-                MainActivity.setScene(new Scene(clinicalCases.get(0)));
-                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
-                startActivity(intent);
-                if (pd.isShowing()){
+                if (pd.isShowing()) {
                     pd.dismiss();
                 }
+                CharSequence[] nameItems = new CharSequence[clinicalCases.size()];
+                for (int c = 0; c < nameItems.length; c++) nameItems[c] = clinicalCases.get(c).getAnamnesis().getSummary();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(FirstActivity.this);
+                builder.setTitle("Selecione o caso:")
+                        .setItems(nameItems, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+
+                                MainActivity.setScene(new Scene(clinicalCases.get(which)));
+                                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
-        });*/
-        new ClinicalCaseFirestoreTransfer().loadCases(null,new OnLoadClinicalCasesListener(){
-            @Override
-            public void onLoadedClinicalCases(ArrayList<ClinicalCase> clinicalCases) {
-                MainActivity.setScene(new Scene(clinicalCases.get(0)));
-                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
-                startActivity(intent);
-                if (pd.isShowing()){
-                    pd.dismiss();
-                }
-            }
-        });
+        };
+        new ClinicalCaseWebTransfer().loadCases(null,loadListener);
+        //new ClinicalCaseFirestoreTransfer().loadCases(null,loadListener);
     }
 
     @Override
