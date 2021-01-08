@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public interface ClinicalCaseTransfer {
 
-    public ArrayList<ClinicalCase> loadCases (Uri uri);
+    public void loadCases (Uri uri, OnLoadClinicalCasesListener transListener);
     public void sendCases (ArrayList<ClinicalCase> clinicalCases, Uri uri);
 }

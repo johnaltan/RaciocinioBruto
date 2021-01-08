@@ -3,9 +3,10 @@ package com.example.raciociniobruto;
 import java.util.List;
 
 public class ClinicalCase {
+
+    private String identifier;
+
     private List<Disease> diseases;
-
-
     private StageBean anamnesis;
     private StageBean physicalExam;
     private StageBean complementaryExam;
@@ -34,5 +35,13 @@ public class ClinicalCase {
 
     public StageBean getComplementaryExam() {
         return complementaryExam;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 }

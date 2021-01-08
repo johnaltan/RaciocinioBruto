@@ -1,22 +1,14 @@
 package com.example.raciociniobruto;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,7 +25,7 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
         this.context = context;
     }
     @Override
-    public ArrayList<ClinicalCase> loadCases(Uri uri) {
+    public void loadCases(Uri uri, OnLoadClinicalCasesListener transListener) {
         FileInputStream fis = null;
         ArrayList<ClinicalCase> loadedClinicalCases = null;
 
@@ -49,6 +41,7 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
             }
             Gson gson = new Gson();
             loadedClinicalCases = gson.fromJson(sb.toString(), new TypeToken<ArrayList<ClinicalCase>>(){}.getType());
+            transListener.onLoadedClinicalCases(loadedClinicalCases);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -63,7 +56,6 @@ public class ClinicalCaseFileTransfer implements ClinicalCaseTransfer {
                 }
             }
         }
-        return loadedClinicalCases;
     }
 
     @Override

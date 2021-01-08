@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.gson.Gson;
+
 public class FirstActivity extends AppCompatActivity {
     private static final int PICK_JSON_FILE = 2;
     ProgressDialog pd;
@@ -50,7 +52,33 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     private void downloadCases() {
-        new DownloaderTask().execute();
+        pd = new ProgressDialog(FirstActivity.this);
+        pd.setMessage("Baixando casos, aguarde...");
+        pd.setCancelable(false);
+        pd.show();
+
+     /*   new ClinicalCaseWebTransfer().loadCases(null,new OnLoadClinicalCasesListener(){
+            @Override
+            public void onLoadedClinicalCases(ArrayList<ClinicalCase> clinicalCases) {
+                MainActivity.setScene(new Scene(clinicalCases.get(0)));
+                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                startActivity(intent);
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
+            }
+        });*/
+        new ClinicalCaseFirestoreTransfer().loadCases(null,new OnLoadClinicalCasesListener(){
+            @Override
+            public void onLoadedClinicalCases(ArrayList<ClinicalCase> clinicalCases) {
+                MainActivity.setScene(new Scene(clinicalCases.get(0)));
+                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                startActivity(intent);
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
+            }
+        });
     }
 
     @Override
@@ -59,68 +87,14 @@ public class FirstActivity extends AppCompatActivity {
         Log.d("ONACTIVITYRESULT", "Voltou");
         if (resultCode == Activity.RESULT_OK && requestCode == this.PICK_JSON_FILE) {
             Log.d("ONACTIVITYRESULT", "Respondeu: " + data.getData());
-            ClinicalCaseFileTransfer transfer = new ClinicalCaseFileTransfer(this);
-            ArrayList<ClinicalCase> clinicalCases = transfer.loadCases(data.getData());
-            MainActivity.setScene(new Scene(clinicalCases.get(0)));
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            new ClinicalCaseFileTransfer(this).loadCases(data.getData(),new OnLoadClinicalCasesListener(){
+                @Override
+                public void onLoadedClinicalCases(ArrayList<ClinicalCase> clinicalCases) {
+                    MainActivity.setScene(new Scene(clinicalCases.get(0)));
+                    Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
-
-    private void postClinicalCaseFirebase(ClinicalCase clinicalCase) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d("TAG", "Bora salvar");
-        db.collection("casosClinicos").
-                add(clinicalCase)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.w("TAG", "Error adding document", e);
-                    }
-                });
-    }
-
-
-    protected class DownloaderTask extends AsyncTask <Void, String, ArrayList<ClinicalCase>>{
-
-        @Override
-        protected ArrayList<ClinicalCase> doInBackground (Void... params){
-            ClinicalCaseWebTransfer transfer = new ClinicalCaseWebTransfer();
-            return transfer.loadCases(null);
-
-        }
-
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-
-            pd = new ProgressDialog(FirstActivity.this);
-            pd.setMessage("Baixando casos, aguarde...");
-            pd.setCancelable(false);
-            pd.show();
-
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<ClinicalCase> result){
-            super.onPostExecute(result);
-
-            if (pd.isShowing()){
-                pd.dismiss();
-            }
-            if(result != null) {
-                MainActivity.setScene(new Scene(result.get(0)));
-                Intent intent = new Intent(FirstActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        }
-
-    }
-
 }
