@@ -1,24 +1,25 @@
 package com.example.raciociniobruto;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class StageBean {
-    private ArrayList<StageItem> availableItems;
+    private List<StageItem> availableItems;
     private String summary;
 
     public StageBean() {
         this.availableItems = new ArrayList<StageItem>();
     }
 
-    public StageBean(ArrayList<StageItem> availableItems) {
+    public StageBean(List<StageItem> availableItems) {
         this.availableItems = availableItems;
     }
 
-    public ArrayList<StageItem> getAvailableItems() {
+    public List<StageItem> getAvailableItems() {
         return availableItems;
     }
 
-    public void setAvailableItems(ArrayList<StageItem> availableItems) {
+    public void setAvailableItems(List<StageItem> availableItems) {
         this.availableItems = availableItems;
     }
     public void addAvailableItem(StageItem newItem){
