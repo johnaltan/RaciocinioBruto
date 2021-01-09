@@ -86,8 +86,8 @@ public class FirstActivity extends AppCompatActivity {
                 dialog.show();
             }
         };
-        new ClinicalCaseWebTransfer().loadCases(null,loadListener);
-        //new ClinicalCaseFirestoreTransfer().loadCases(null,loadListener);
+        //new ClinicalCaseWebTransfer().loadCases(null,loadListener);
+        new ClinicalCaseFirestoreTransfer().loadCases(null,loadListener);
     }
 
     @Override

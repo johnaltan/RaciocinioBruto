@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity  {
 
         ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
         if (MainActivity.nameNotFoundItems().size() > 0){
-            outputText += "\nInexistentes: ";
+            outputText += "Inexistentes: ";
             namesAsked = MainActivity.nameNotFoundItems();
             for (String i : namesAsked) outputText += i+", ";
         }
