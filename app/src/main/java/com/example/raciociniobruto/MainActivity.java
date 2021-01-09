@@ -79,10 +79,27 @@ public class MainActivity extends AppCompatActivity  {
         stageAdapter = new StageAdapter(this,scene);
         viewPager.setAdapter(stageAdapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                scene.setStagePos(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         findViewById(R.id.button_stage_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scene.moveOneStageFrom(viewPager.getCurrentItem(),Scene.MOVE_FOWARD);
+                scene.nextStage();
                 viewPager.setCurrentItem(scene.getStagePos());
             }
         });
@@ -90,7 +107,7 @@ public class MainActivity extends AppCompatActivity  {
         findViewById(R.id.button_stage_previous).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scene.moveOneStageFrom(viewPager.getCurrentItem(),Scene.MOVE_BACKWARD);
+                scene.previousStage();
                 viewPager.setCurrentItem(scene.getStagePos());
             }
         });
@@ -99,7 +116,6 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 probablyLeaving = false;
-                scene.setStagePos(viewPager.getCurrentItem());
                 Intent intent = new Intent(MainActivity.this,InfoActivity.class);
                 startActivityForResult(intent,PICK_INFO);
             }

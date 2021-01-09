@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 public class Scene {
 
-    public static final int MOVE_FOWARD = 1;
-    public static final int MOVE_BACKWARD = -1;
-
     private ClinicalCase clinicalCase;
     private Stage stages[];
     private int step;
@@ -38,12 +35,6 @@ public class Scene {
 
     public void advanceSteps(int steps){
         this.step += steps;
-    }
-
-    public void moveOneStageFrom(int previousStage, int direction){
-        this.stagePos = previousStage;
-        if(direction > 0) nextStage();
-        else previousStage();
     }
 
     public void nextStage() {
@@ -101,7 +92,9 @@ public class Scene {
         return this.stages[stagePos].getName();
     }
 
-    public void setStagePos(int stagePos) {this.stagePos = stagePos;}
+    public void setStagePos(int stagePos) {
+        if(stagePos < stages.length) this.stagePos = stagePos;
+    }
 
     public int getStagePos(){
         return this.stagePos;
