@@ -20,6 +20,8 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.GestureDetector;
 
 import androidx.core.view.MotionEventCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,7 +41,9 @@ public class MainActivity extends AppCompatActivity  {
     TextView txtScore;
     String outputText;
     RecyclerView rv;
+    ViewPager viewPager;
     private StageItemAdapter stageItemAdapter;
+    private PagerAdapter stageAdapter;
     private boolean probablyLeaving;
 
     private static Scene scene;
@@ -71,26 +75,23 @@ public class MainActivity extends AppCompatActivity  {
 
         }
 
-        gestureDetector = new GestureDetector(this, new MyGestureDetector());
-        gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        };
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        stageAdapter = new StageAdapter(this,scene);
+        viewPager.setAdapter(stageAdapter);
 
         findViewById(R.id.button_stage_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.nextStage();
-                updateViews();
+                scene.moveOneStageFrom(viewPager.getCurrentItem(),Scene.MOVE_FOWARD);
+                viewPager.setCurrentItem(scene.getStagePos());
             }
         });
 
         findViewById(R.id.button_stage_previous).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.previousStage();
-                updateViews();
+                scene.moveOneStageFrom(viewPager.getCurrentItem(),Scene.MOVE_BACKWARD);
+                viewPager.setCurrentItem(scene.getStagePos());
             }
         });
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 probablyLeaving = false;
+                scene.setStagePos(viewPager.getCurrentItem());
                 Intent intent = new Intent(MainActivity.this,InfoActivity.class);
                 startActivityForResult(intent,PICK_INFO);
             }
@@ -118,9 +120,6 @@ public class MainActivity extends AppCompatActivity  {
         txtTitle = (TextView) findViewById(R.id.txt_stage_title);
 
         rv = (RecyclerView) findViewById(R.id.recycler_view_stage);
-        rv.setOnTouchListener(gestureListener);
-
-        updateViews();
     }
 
     @Override
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == this.PICK_INFO) {
 
-            updateViews();
+            stageAdapter.notifyDataSetChanged();
         }
     }
 
@@ -209,6 +208,10 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    public static Scene getScene (){
+        return scene;
+    }
+
     public static int getStep() {
         return scene.getStep();
     }
@@ -268,31 +271,5 @@ public class MainActivity extends AppCompatActivity  {
 
     public static ArrayList<String> nameTriedHypothesis(){
         return scene.getTriedHypothesis();
-    }
-
-    class MyGestureDetector extends SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                    return false;
-                // right to left swipe
-                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    MainActivity.nextStage();
-                    updateViews();
-                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    MainActivity.previousStage();
-                    updateViews();
-                }
-            } catch (Exception e) {
-                // nothing
-            }
-            return false;
-        }
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
     }
 }

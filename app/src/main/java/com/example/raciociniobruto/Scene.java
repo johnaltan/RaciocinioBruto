@@ -3,6 +3,10 @@ package com.example.raciociniobruto;
 import java.util.ArrayList;
 
 public class Scene {
+
+    public static final int MOVE_FOWARD = 1;
+    public static final int MOVE_BACKWARD = -1;
+
     private ClinicalCase clinicalCase;
     private Stage stages[];
     private int step;
@@ -34,6 +38,12 @@ public class Scene {
 
     public void advanceSteps(int steps){
         this.step += steps;
+    }
+
+    public void moveOneStageFrom(int previousStage, int direction){
+        this.stagePos = previousStage;
+        if(direction > 0) nextStage();
+        else previousStage();
     }
 
     public void nextStage() {
@@ -92,6 +102,10 @@ public class Scene {
     }
 
     public void setStagePos(int stagePos) {this.stagePos = stagePos;}
+
+    public int getStagePos(){
+        return this.stagePos;
+    }
 
     public void calculateGlobalAvailableItemsAmount(){
         this.globalAvailableItemsAmount = 0;
