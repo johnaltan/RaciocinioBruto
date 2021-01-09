@@ -43,14 +43,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private static Scene scene;
 
-    private ArrayList<ClinicalCase> clinicalCases;
-
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
