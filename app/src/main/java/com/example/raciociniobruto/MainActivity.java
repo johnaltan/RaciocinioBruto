@@ -35,12 +35,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity  {
     private static final int PICK_INFO = 3;
-    TextView txtContent;
-    TextView txtTitle;
-    TextView txtSummary;
-    TextView txtScore;
-    String outputText;
-    RecyclerView rv;
+
     ViewPager viewPager;
     private StageItemAdapter stageItemAdapter;
     private PagerAdapter stageAdapter;
@@ -129,13 +124,6 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(intent);
             }
         });
-
-        txtContent = (TextView) findViewById(R.id.txt_stage_content);
-        txtSummary = (TextView) findViewById(R.id.txt_stage_summary);
-        txtScore = (TextView) findViewById(R.id.txt_stage_score);
-        txtTitle = (TextView) findViewById(R.id.txt_stage_title);
-
-        rv = (RecyclerView) findViewById(R.id.recycler_view_stage);
     }
 
     @Override
@@ -176,29 +164,6 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-
-
-    private void updateViews(){
-
-        txtSummary.setText("Resumo: " + MainActivity.getStageSummary());
-        txtScore.setText("Passos dados: " + String.valueOf(MainActivity.getStep()) + "\nDisponível: " + String.valueOf(MainActivity.getGlobalAvailableItemsAmount()));
-
-        txtTitle.setText(MainActivity.getStageName());
-        outputText = new String();
-
-        ArrayList<String> namesAsked = MainActivity.nameAskedFoundItems();
-        if (MainActivity.nameNotFoundItems().size() > 0){
-            outputText += "Inexistentes: ";
-            namesAsked = MainActivity.nameNotFoundItems();
-            for (String i : namesAsked) outputText += i+", ";
-        }
-        if(outputText.contains(",")) outputText = outputText.substring(0,outputText.lastIndexOf(",")) + ".";
-
-        txtContent.setText(outputText);
-
-        stageItemAdapter= new StageItemAdapter(MainActivity.getAskedFoundItems());
-        rv.setAdapter(stageItemAdapter);
-    }
 
     private ClinicalCase TESTgenerateClinicalCase (){
         StageBean anamnesis = new StageBean();
