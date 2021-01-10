@@ -9,6 +9,7 @@ public class StageItem {
     private List<String> synonyms;
     private List<String> nonMedicalAdjectives;
     private boolean valueIsImage;
+    private boolean synonymsPreparedToCompare; //it's a mistake, this variable can be modified by json!
 
     public StageItem() {
 
@@ -44,13 +45,36 @@ public class StageItem {
         this.value = value;
     }
 
+    public void prepareSynonymsToCompare(){ //it must be done on object's construction
+        if(synonyms != null) {
+            for (int i = 0; i < this.synonyms.size(); i++) {
+                synonyms.set(i, StringTreater.adjustSpelling(synonyms.get(i)).trim());
+            }
+            if (nonMedicalAdjectives != null) {
+                for (String s : this.nonMedicalAdjectives) {
+                    for (int i = 0; i < this.synonyms.size(); i++) {
+                        synonyms.set(i, synonyms.get(i).replaceAll(" " + StringTreater.adjustSpelling(s), ""));
+                    }
+                }
+            }
+            this.synonymsPreparedToCompare = true;
+        }
+    }
+
 
     public boolean existFromInquiryName(String inquiryName) throws AlmostMinimumNecessaryException{
         String adjustedInquiryName = StringTreater.adjustSpelling(inquiryName);
         String adjustedItemName = StringTreater.adjustSpelling(this.name);
 
-        //remove nonMedicalAdjectives from inquiryName
-        if(nonMedicalAdjectives != null) for(String s : this.nonMedicalAdjectives) adjustedInquiryName = adjustedInquiryName.replaceAll(" " + StringTreater.adjustSpelling(s),"");
+        if(!this.synonymsPreparedToCompare) prepareSynonymsToCompare();
+
+        //remove nonMedicalAdjectives
+        if(nonMedicalAdjectives != null) {
+            for(String s : this.nonMedicalAdjectives) {
+                adjustedInquiryName = adjustedInquiryName.replaceAll(" " + StringTreater.adjustSpelling(s),"");
+                adjustedItemName = adjustedItemName.replaceAll(" " + StringTreater.adjustSpelling(s),"");
+            }
+        }
 
         adjustedInquiryName = adjustedInquiryName.trim();
         adjustedItemName = adjustedItemName.trim();
