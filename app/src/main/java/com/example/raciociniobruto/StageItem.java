@@ -1,11 +1,13 @@
 package com.example.raciociniobruto;
 
 import java.util.List;
+import android.util.Log;
 
 public class StageItem {
     private String name;
     private String value;
     private List<String> synonyms;
+    private List<String> nonMedicalAdjectives;
     private boolean valueIsImage;
 
     public StageItem() {
@@ -46,6 +48,12 @@ public class StageItem {
     public boolean existFromInquiryName(String inquiryName) throws AlmostMinimumNecessaryException{
         String adjustedInquiryName = StringTreater.adjustSpelling(inquiryName);
         String adjustedItemName = StringTreater.adjustSpelling(this.name);
+
+        //remove nonMedicalAdjectives from inquiryName
+        if(nonMedicalAdjectives != null) for(String s : this.nonMedicalAdjectives) adjustedInquiryName = adjustedInquiryName.replaceAll(" " + StringTreater.adjustSpelling(s),"");
+
+        adjustedInquiryName = adjustedInquiryName.trim();
+        adjustedItemName = adjustedItemName.trim();
 
         //if item name matches with inquiry name
         if(adjustedItemName.equalsIgnoreCase(adjustedInquiryName)) return true;
