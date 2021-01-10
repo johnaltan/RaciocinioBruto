@@ -40,7 +40,7 @@ public class Stage {
         return this.name;
     }
 
-    public ArrayList<StageItem> askItem(String inquiryName){
+    public ArrayList<StageItem> askItem(String inquiryName) throws AlmostMinimumNecessaryException{
         this.tempAskedFoundItemsIndexes.clear();
         ArrayList<StageItem> items = new ArrayList<StageItem>();
 

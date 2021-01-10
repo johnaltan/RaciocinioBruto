@@ -62,44 +62,50 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String i = editTextOption.getText().toString();
+                try {
+                    ArrayList<StageItem> items = MainActivity.askItem(i);
+                    int itemsSize = items.size();
+                    switch (itemsSize) {
+                        case 0:
+                            Toast.makeText(view.getContext(), "Info não encontrada.", Toast.LENGTH_LONG).show();
+                            break;
+                        case 1:
+                            Toast.makeText(view.getContext(), "Info encontrada e registrada como: " + items.get(0).getName() + ".", Toast.LENGTH_LONG).show();
+                            break;
+                        default:
+                            CharSequence[] nameItems = new CharSequence[items.size()];
+                            for (int c = 0; c < nameItems.length; c++)
+                                nameItems[c] = items.get(c).getName();
 
-                ArrayList<StageItem> items = MainActivity.askItem(i);
-                int itemsSize = items.size();
-                switch (itemsSize){
-                    case 0:
-                        Toast.makeText(view.getContext(),"Info não encontrada.", Toast.LENGTH_LONG).show();
-                        break;
-                    case 1:
-                        Toast.makeText(view.getContext(),"Info encontrada e registrada como: " + items.get(0).getName() + ".", Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        CharSequence[] nameItems = new CharSequence[items.size()];
-                        for (int c = 0; c < nameItems.length; c++) nameItems[c] = items.get(c).getName();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(InfoActivity.this);
+                            builder.setTitle("Há " + String.valueOf(itemsSize) + " itens. Escolha um:")
+                                    .setItems(nameItems, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // The 'which' argument contains the index position
+                                            // of the selected item
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(InfoActivity.this);
-                        builder.setTitle("Há " + String.valueOf(itemsSize) + " itens. Escolha um:")
-                                .setItems(nameItems, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // The 'which' argument contains the index position
-                                        // of the selected item
-
-                                        ArrayList<Integer> indexesToSave = new ArrayList<Integer>();
-                                        indexesToSave.add(which);
-                                        MainActivity.saveTempFoundItemsIndexes(indexesToSave);
-                                        Toast.makeText(view.getContext(),"Info encontrada e registrada como: " + items.get(which).getName() + ".", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                        // Create the AlertDialog
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                        break;
+                                            ArrayList<Integer> indexesToSave = new ArrayList<Integer>();
+                                            indexesToSave.add(which);
+                                            MainActivity.saveTempFoundItemsIndexes(indexesToSave);
+                                            Toast.makeText(view.getContext(), "Info encontrada e registrada como: " + items.get(which).getName() + ".", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                            // Create the AlertDialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            break;
+                    }
+                    stringTxtContent += i + "\n";
+                    txtContent.setText(stringTxtContent);
+                    editTextOption.setText("");
+                    editTextOption.requestFocus();
+                } catch (AlmostMinimumNecessaryException e){
+                    Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
-                stringTxtContent += i + "\n";
-                txtContent.setText(stringTxtContent);
 
-                editTextOption.setText("");
-                editTextOption.requestFocus();
+
+
             }
         });
 

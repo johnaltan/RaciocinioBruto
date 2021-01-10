@@ -34,9 +34,27 @@ public class StringTreater {
     public static boolean containsMinimumNecessary(String inquiry, String test) {
         int matches = 0;
 
-        if ((StringTreater.countWords(inquiry) >= 2) && ((StringTreater.countWords(inquiry) == (StringTreater.countWords(test) - 1))))
-            for (String s : inquiry.split("\\s+")) if (test.contains(s)) matches++;
+        if ((StringTreater.countWords(inquiry) >= 2) && ((StringTreater.countWords(inquiry) == (StringTreater.countWords(test) - 1)))){
+            inquiry = inquiry.trim();
+            test = test.trim();
+            String[] testSplit = test.split("\\s+");
+            for (String s : inquiry.split("\\s+")) for(String t : testSplit) if (t.equalsIgnoreCase(s)) matches++;
+        }
 
         return matches >= 2;
+    }
+
+    public static boolean containsAlmostMinimumNecessary(String inquiry, String test) {
+        int matches = 0;
+        inquiry = inquiry.trim();
+        String [] inquirySplit = inquiry.split("\\s+");
+
+        if(StringTreater.countWords(test) > StringTreater.countWords(inquiry)) {
+            test = test.trim();
+            String[] testSplit = test.split("\\s+");
+            for (String s : inquirySplit) for(String t : testSplit) if (t.equalsIgnoreCase(s)) matches++;
+        }
+
+        return matches == inquirySplit.length;
     }
 }

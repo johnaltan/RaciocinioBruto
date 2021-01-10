@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity  {
         return scene.getStep();
     }
 
-    public static ArrayList<StageItem> askItem(String info) {
+    public static ArrayList<StageItem> askItem(String info) throws AlmostMinimumNecessaryException {
         return scene.askItem(info);
     }
 

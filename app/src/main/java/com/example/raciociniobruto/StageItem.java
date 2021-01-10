@@ -43,19 +43,31 @@ public class StageItem {
     }
 
 
-    public boolean existFromInquiryName(String inquiryName){
+    public boolean existFromInquiryName(String inquiryName) throws AlmostMinimumNecessaryException{
         String adjustedInquiryName = StringTreater.adjustSpelling(inquiryName);
         String adjustedItemName = StringTreater.adjustSpelling(this.name);
 
-        if(adjustedItemName.equalsIgnoreCase(adjustedInquiryName)) return true; //if item name matches with inquiry name
+        //if item name matches with inquiry name
+        if(adjustedItemName.equalsIgnoreCase(adjustedInquiryName)) return true;
 
+        //if a synonym matches with inquiry name
         if (this.synonyms != null)
-            for(String s : this.synonyms) if (StringTreater.adjustSpelling(s).equalsIgnoreCase(adjustedInquiryName)) return true; //if a synonym matches with inquiry name
+            for(String s : this.synonyms) if (StringTreater.adjustSpelling(s).equalsIgnoreCase(adjustedInquiryName)) return true;
 
-        if(StringTreater.containsMinimumNecessary(adjustedInquiryName,adjustedItemName)) return true; //if at least 2 words on inquiry name matches with item name
+        //if at least 2 words on inquiry name matches with item name
+        if(StringTreater.containsMinimumNecessary(adjustedInquiryName,adjustedItemName)) return true;
 
+        //if at least 2 words on inquiry name matches with an synonym
         if (this.synonyms != null)
-            for(String s : this.synonyms) if (StringTreater.containsMinimumNecessary(adjustedInquiryName,StringTreater.adjustSpelling(s))) return true; //if at least 2 words on inquiry name matches with an synonym
+            for(String s : this.synonyms) if (StringTreater.containsMinimumNecessary(adjustedInquiryName,StringTreater.adjustSpelling(s))) return true;
+
+        //if there are almost minimum to find an item on inquiry name to match with item name
+        if(StringTreater.containsAlmostMinimumNecessary(adjustedInquiryName,adjustedItemName)) throw new AlmostMinimumNecessaryException();
+
+        //if there are almost minimum to find an item on inquiry name to match with an synonym
+        if (this.synonyms != null)
+            for(String s : this.synonyms)
+                if (StringTreater.containsAlmostMinimumNecessary(adjustedInquiryName,StringTreater.adjustSpelling(s))) throw new AlmostMinimumNecessaryException();
 
         return false;
     }

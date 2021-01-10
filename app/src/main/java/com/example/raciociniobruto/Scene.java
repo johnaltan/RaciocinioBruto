@@ -50,7 +50,7 @@ public class Scene {
         return this.step;
     }
 
-    public ArrayList<StageItem> askItem(String info){
+    public ArrayList<StageItem> askItem(String info) throws AlmostMinimumNecessaryException{
         ArrayList<StageItem> askedInfos = this.stages[stagePos].askItem(info);
         if (askedInfos.size() <= 1) advanceSteps(1);
         return askedInfos;
