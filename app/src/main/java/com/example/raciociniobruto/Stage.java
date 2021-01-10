@@ -7,6 +7,7 @@ public class Stage {
     private ArrayList<Integer> askedFoundItemsIndexes;
     private ArrayList<Integer> tempAskedFoundItemsIndexes;
     private ArrayList<String> notFoundItemsNames;
+    private ArrayList<StageItem> availableItems;
 
     private StageBean stageBean;
 
@@ -14,12 +15,15 @@ public class Stage {
         this.askedFoundItemsIndexes = new ArrayList<Integer>();
         this.tempAskedFoundItemsIndexes = new ArrayList<Integer>();
         this.notFoundItemsNames = new ArrayList<String>();
+        this.availableItems = new ArrayList<StageItem>();
         stageBean = new StageBean();
     }
 
     public Stage (String name, StageBean stageBean){
         this.name = name;
         this.stageBean = stageBean;
+        this.availableItems = new ArrayList<StageItem>();
+        for(int i = 0; i < stageBean.getAvailableItems().size(); i++) availableItems.add(new StageItem(stageBean.getAvailableItems().get(i)));
         this.askedFoundItemsIndexes = new ArrayList<Integer>();
         this.tempAskedFoundItemsIndexes = new ArrayList<Integer>();
         this.notFoundItemsNames = new ArrayList<String>();
@@ -44,10 +48,10 @@ public class Stage {
         this.tempAskedFoundItemsIndexes.clear();
         ArrayList<StageItem> items = new ArrayList<StageItem>();
 
-        for (int x = 0;x < stageBean.getAvailableItems().size(); x++) {
-            StageItem i = stageBean.getAvailableItems().get(x);
+        for (int x = 0;x < this.availableItems.size(); x++) {
+            StageItem i = this.availableItems.get(x);
             if (i.existFromInquiryName(inquiryName)) {
-                items.add(this.stageBean.getAvailableItems().get(x));
+                items.add(this.availableItems.get(x));
                 this.tempAskedFoundItemsIndexes.add(x);
             }
         }
@@ -70,7 +74,7 @@ public class Stage {
     public String findAskedItemValue (String itemName){
         String itemValue = null;
         for (Integer i : askedFoundItemsIndexes){
-            StageItem item = stageBean.getAvailableItems().get(i);
+            StageItem item = this.availableItems.get(i);
             if (item.getName().equalsIgnoreCase(itemName)) {
                 itemValue = item.getValue();
                 break;
@@ -81,13 +85,13 @@ public class Stage {
 
     public ArrayList<String> nameAskedFoundItems(){
         ArrayList<String> namesAskedItems = new ArrayList<String>();
-        for (Integer i : askedFoundItemsIndexes) namesAskedItems.add(stageBean.getAvailableItems().get(i).getName());
+        for (Integer i : askedFoundItemsIndexes) namesAskedItems.add(this.availableItems.get(i).getName());
         return namesAskedItems;
     }
 
     public ArrayList<StageItem> getAskedFoundItems(){
         ArrayList<StageItem> stageItems = new ArrayList<StageItem>();
-        for(Integer i : askedFoundItemsIndexes) stageItems.add(stageBean.getAvailableItems().get(i));
+        for(Integer i : askedFoundItemsIndexes) stageItems.add(this.availableItems.get(i));
         return stageItems;
     }
 
@@ -110,7 +114,7 @@ public class Stage {
     }
 
     public void addAvailableItem(StageItem newItem){
-        this.stageBean.getAvailableItems().add(newItem);
+        this.availableItems.add(newItem);
     }
 
     public String getSummary(){
@@ -118,7 +122,7 @@ public class Stage {
     }
 
     public int informAvailableItemsAmount(){
-        return this.stageBean.getAvailableItems().size();
+        return this.availableItems.size();
     }
 
 

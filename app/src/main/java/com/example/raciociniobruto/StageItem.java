@@ -4,73 +4,73 @@ import java.util.List;
 import android.util.Log;
 
 public class StageItem {
-    private String name;
-    private String value;
-    private List<String> synonyms;
-    private List<String> nonMedicalAdjectives;
-    private boolean valueIsImage;
-    private boolean synonymsPreparedToCompare; //it's a mistake, this variable can be modified by json!
+
+    StageItemBean stageItemBean;
 
     public StageItem() {
-
-
     }
 
-    public StageItem(String name, String value) {
-        this.name = name;
-        this.value = value;
-        this.synonyms = null;
+    public StageItem(String name, String value){
+        stageItemBean = new StageItemBean(name,value);
     }
 
-    public StageItem(String name, String value, List<String> synonyms) {
-        this.name = name;
-        this.value = value;
-        this.synonyms = synonyms;
+    public StageItem(StageItemBean stageItemBean) {
+        this.stageItemBean = stageItemBean;
+        prepareSynonymsToCompare();
+    }
 
+    public void setStageItemBean(StageItemBean stageItemBean){
+        this.stageItemBean = stageItemBean;
+        prepareSynonymsToCompare();
     }
 
     public String getName() {
-        return name;
+        return stageItemBean.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        stageItemBean.setName(name);
     }
 
     public String getValue() {
-        return value;
+        return stageItemBean.getValue();
     }
 
     public void setValue(String value) {
-        this.value = value;
+        stageItemBean.setValue(value);
     }
 
-    public void prepareSynonymsToCompare(){ //it must be done on object's construction
-        if(synonyms != null) {
-            for (int i = 0; i < this.synonyms.size(); i++) {
-                synonyms.set(i, StringTreater.adjustSpelling(synonyms.get(i)).trim());
+    public List<String> getSynonyms() {
+        return stageItemBean.getSynonyms();
+    }
+
+    public void setSynonyms(List<String> synonyms) {
+        stageItemBean.setSynonyms(synonyms);
+        prepareSynonymsToCompare();
+    }
+
+    private void prepareSynonymsToCompare(){ //it must be done on object's construction
+        if(stageItemBean.getSynonyms() != null) {
+            for (int i = 0; i < this.stageItemBean.getSynonyms().size(); i++) {
+                stageItemBean.getSynonyms().set(i, StringTreater.adjustSpelling(stageItemBean.getSynonyms().get(i)).trim());
             }
-            if (nonMedicalAdjectives != null) {
-                for (String s : this.nonMedicalAdjectives) {
-                    for (int i = 0; i < this.synonyms.size(); i++) {
-                        synonyms.set(i, synonyms.get(i).replaceAll(" " + StringTreater.adjustSpelling(s), ""));
+            if (stageItemBean.getNonMedicalAdjectives() != null) {
+                for (String s : this.stageItemBean.getNonMedicalAdjectives()) {
+                    for (int i = 0; i < this.stageItemBean.getSynonyms().size(); i++) {
+                        stageItemBean.getSynonyms().set(i, stageItemBean.getSynonyms().get(i).replaceAll(" " + StringTreater.adjustSpelling(s), ""));
                     }
                 }
             }
-            this.synonymsPreparedToCompare = true;
         }
     }
 
-
     public boolean existFromInquiryName(String inquiryName) throws AlmostMinimumNecessaryException{
         String adjustedInquiryName = StringTreater.adjustSpelling(inquiryName);
-        String adjustedItemName = StringTreater.adjustSpelling(this.name);
-
-        if(!this.synonymsPreparedToCompare) prepareSynonymsToCompare();
+        String adjustedItemName = StringTreater.adjustSpelling(this.stageItemBean.getName());
 
         //remove nonMedicalAdjectives
-        if(nonMedicalAdjectives != null) {
-            for(String s : this.nonMedicalAdjectives) {
+        if(stageItemBean.getNonMedicalAdjectives() != null) {
+            for(String s : this.stageItemBean.getNonMedicalAdjectives()) {
                 adjustedInquiryName = adjustedInquiryName.replaceAll(" " + StringTreater.adjustSpelling(s),"");
                 adjustedItemName = adjustedItemName.replaceAll(" " + StringTreater.adjustSpelling(s),"");
             }
@@ -83,35 +83,36 @@ public class StageItem {
         if(adjustedItemName.equalsIgnoreCase(adjustedInquiryName)) return true;
 
         //if a synonym matches with inquiry name
-        if (this.synonyms != null)
-            for(String s : this.synonyms) if (StringTreater.adjustSpelling(s).equalsIgnoreCase(adjustedInquiryName)) return true;
+        if (this.stageItemBean.getSynonyms() != null)
+            for(String s : this.stageItemBean.getSynonyms()) if (s.equalsIgnoreCase(adjustedInquiryName)) return true;
 
         //if at least 2 words on inquiry name matches with item name
         if(StringTreater.containsMinimumNecessary(adjustedInquiryName,adjustedItemName)) return true;
 
         //if at least 2 words on inquiry name matches with an synonym
-        if (this.synonyms != null)
-            for(String s : this.synonyms) if (StringTreater.containsMinimumNecessary(adjustedInquiryName,StringTreater.adjustSpelling(s))) return true;
+        if (this.stageItemBean.getSynonyms() != null)
+            for(String s : this.stageItemBean.getSynonyms()) if (StringTreater.containsMinimumNecessary(adjustedInquiryName,s)) return true;
 
         //if there are almost minimum to find an item on inquiry name to match with item name
         if(StringTreater.containsAlmostMinimumNecessary(adjustedInquiryName,adjustedItemName)) throw new AlmostMinimumNecessaryException();
 
         //if there are almost minimum to find an item on inquiry name to match with an synonym
-        if (this.synonyms != null)
-            for(String s : this.synonyms)
-                if (StringTreater.containsAlmostMinimumNecessary(adjustedInquiryName,StringTreater.adjustSpelling(s))) throw new AlmostMinimumNecessaryException();
+        if (this.stageItemBean.getSynonyms() != null)
+            for(String s : this.stageItemBean.getSynonyms())
+                if (StringTreater.containsAlmostMinimumNecessary(adjustedInquiryName,s)) throw new AlmostMinimumNecessaryException();
 
         return false;
     }
 
 
     public void setValueIsImage(boolean valueIsImage){
-        this.valueIsImage = valueIsImage;
+        stageItemBean.setValueIsImage(valueIsImage);
     }
 
-    public boolean getValueIsImage(){
-        return this.valueIsImage;
+    public boolean getValueIsImage() {
+        return stageItemBean.getValueIsImage();
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -120,10 +121,10 @@ public class StageItem {
         if (obj.getClass() != this.getClass()) return false;
 
         final StageItem other = (StageItem) obj;
-        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name))
+        if ((this.getName() == null) ? (other.getName() != null) : !this.getName().equals(other.getName()))
             return false;
 
-        if (this.value != other.value) return false;
+        if (this.getValue() != other.getValue()) return false;
         return true;
     }
 }

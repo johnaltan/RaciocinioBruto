@@ -159,23 +159,23 @@ public class MainActivity extends AppCompatActivity  {
 
     private ClinicalCase TESTgenerateClinicalCase (){
         StageBean anamnesis = new StageBean();
-        anamnesis.addAvailableItem(new StageItem("Nome", "JMC"));
-        anamnesis.addAvailableItem(new StageItem("Idade", "56"));
-        anamnesis.addAvailableItem(new StageItem("Sexo", "Masculino"));
-        anamnesis.addAvailableItem(new StageItem("Profissão", "Pedreiro"));
-        anamnesis.addAvailableItem(new StageItem("QP", "Dor de cabeça"));
-        anamnesis.addAvailableItem(new StageItem("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"));
-        anamnesis.addAvailableItem(new StageItem("ISDAS", "SP"));
-   //     anamnesis.addAvailableItem(new StageItem("HMP", "Nega comorbidades",new List{"comorbidades","doenças prévias","medicações em uso","MUC"}));
-        anamnesis.addAvailableItem(new StageItem("HMF", "Nega doenças na família"));
-        anamnesis.addAvailableItem(new StageItem("HFS", "Nega tabagismo. Etilista crônico"));
+        anamnesis.addAvailableItem(new StageItemBean("Nome", "JMC"));
+        anamnesis.addAvailableItem(new StageItemBean("Idade", "56"));
+        anamnesis.addAvailableItem(new StageItemBean("Sexo", "Masculino"));
+        anamnesis.addAvailableItem(new StageItemBean("Profissão", "Pedreiro"));
+        anamnesis.addAvailableItem(new StageItemBean("QP", "Dor de cabeça"));
+        anamnesis.addAvailableItem(new StageItemBean("HDA", "Paciente vem ao consultório com queixa de dor de cabeça há 3 dias, de início súbito, unilateral. Refere piora da dor ao decúbito"));
+        anamnesis.addAvailableItem(new StageItemBean("ISDAS", "SP"));
+   //     anamnesis.addAvailableItem(new StageItemBean("HMP", "Nega comorbidades",new List{"comorbidades","doenças prévias","medicações em uso","MUC"}));
+        anamnesis.addAvailableItem(new StageItemBean("HMF", "Nega doenças na família"));
+        anamnesis.addAvailableItem(new StageItemBean("HFS", "Nega tabagismo. Etilista crônico"));
 
 
         StageBean physicalExam = new StageBean();
-    //    physicalExam.addAvailableItem(new StageItem("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
+    //    physicalExam.addAvailableItem(new StageItemBean("SSVV","PA: 120 / 80 mmHg, TA: 36 ºC, FC: 80 bpm, FR 22 irpm",new String[]{"sinais vitas","sinais","pressão","temperatura","frequência"}));
 
         StageBean complementaryExams = new StageBean();
-   //     complementaryExams.addAvailableItem(new StageItem("RX de tórax","Sem alterações, correlacionar com a clínica",new String[]{"raio x de torax","radiografia de torax"}));
+   //     complementaryExams.addAvailableItem(new StageItemBean("RX de tórax","Sem alterações, correlacionar com a clínica",new String[]{"raio x de torax","radiografia de torax"}));
 
         return new ClinicalCase(anamnesis, null, physicalExam, complementaryExams);
 

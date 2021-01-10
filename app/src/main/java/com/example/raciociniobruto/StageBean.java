@@ -4,25 +4,25 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class StageBean {
-    private List<StageItem> availableItems;
+    private List<StageItemBean> availableItems;
     private String summary;
 
     public StageBean() {
-        this.availableItems = new ArrayList<StageItem>();
+        this.availableItems = new ArrayList<StageItemBean>();
     }
 
-    public StageBean(List<StageItem> availableItems) {
+    public StageBean(List<StageItemBean> availableItems) {
         this.availableItems = availableItems;
     }
 
-    public List<StageItem> getAvailableItems() {
+    public List<StageItemBean> getAvailableItems() {
         return availableItems;
     }
 
-    public void setAvailableItems(List<StageItem> availableItems) {
+    public void setAvailableItems(List<StageItemBean> availableItems) {
         this.availableItems = availableItems;
     }
-    public void addAvailableItem(StageItem newItem){
+    public void addAvailableItem(StageItemBean newItem){
         this.availableItems.add(newItem);
     }
 
